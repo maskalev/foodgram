@@ -3,6 +3,9 @@ from django.db import models
 
 
 class User(AbstractUser):
+    """
+    Custom user model.
+    """
     title = models.CharField(
         verbose_name='Name',
         max_length=256,
