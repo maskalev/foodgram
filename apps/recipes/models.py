@@ -19,7 +19,7 @@ class Ingredient(models.Model):
     )
 
     def __str__(self):
-        return f'{self.name} ({self.unit})'
+        return f'{self.title} ({self.unit})'
 
     class Meta:
         verbose_name = 'Ingredient'
