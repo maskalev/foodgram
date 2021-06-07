@@ -36,7 +36,6 @@ class Tag(models.Model):
     )
     slug = models.SlugField(
         max_length=20,
-        db_index=True,
         unique=True,
         verbose_name='Tag slug',
     )
@@ -89,7 +88,6 @@ class Recipe(models.Model):
     )
     slug = models.SlugField(
         max_length=250,
-        db_index=True,
         unique=True,
         verbose_name='Recipe slug',
     )
@@ -133,4 +131,91 @@ class RecipeIngredients(models.Model):
         constraints = [
             models.UniqueConstraint(fields=('recipe', 'ingredient'),
                                     name='unique_link'),
+        ]
+
+
+class Favorite(models.Model):
+    """
+    Link between users and favorite recipes.
+    """
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='favorites',
+        verbose_name='User',
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='favorites',
+        verbose_name='Recipe',
+    )
+
+    def __str__(self):
+        return f'{self.user}, {self.recipe}'
+
+    class Meta:
+        verbose_name_plural = 'Favorite'
+        verbose_name = 'Favorites'
+        constraints = [
+            models.UniqueConstraint(fields=('user', 'recipe'),
+                                    name='unique_favorites_link'),
+        ]
+
+
+class Purchase(models.Model):
+    """
+    Link between user and his shopping cart.
+    """
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='purchases',
+        verbose_name='User',
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='purchases',
+        verbose_name='Recipe',
+    )
+
+    def __str__(self):
+        return f'{self.user}, {self.recipe}'
+
+    class Meta:
+        verbose_name = 'Purchase'
+        verbose_name_plural = 'Purchases'
+        constraints = [
+            models.UniqueConstraint(fields=('user', 'recipe'),
+                                    name='unique_purchase_link'),
+        ]
+
+
+class Follow(models.Model):
+    """
+    Link between follower and following.
+    """
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='following',
+        verbose_name='Author',
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='follower',
+        verbose_name='Follower',
+    )
+
+    def __str__(self):
+        return f'{self.author}, {self.user}'
+
+    class Meta:
+        verbose_name = 'Follower'
+        verbose_name_plural = 'Follower'
+        constraints = [
+            models.UniqueConstraint(fields=('author', 'user'),
+                                    name='unique_follow_link'),
         ]
