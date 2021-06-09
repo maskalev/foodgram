@@ -131,3 +131,5 @@ dmypy.json
 # media and static files
 media/
 static/
+
+TODO.py

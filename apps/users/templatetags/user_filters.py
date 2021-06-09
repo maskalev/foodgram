@@ -1,0 +1,90 @@
+"""Projects filters."""
+from django import template
+from django.urls import resolve, Resolver404
+
+from apps.recipes.models import Favorite, Purchase, Follow
+
+register = template.Library()
+
+
+@register.simple_tag
+def active_page(request, view_name):
+    """
+    Mark active page.
+    """
+    if not request:
+        return ''
+    try:
+        return 'nav__item_active' if resolve(
+            request.path_info).url_name == view_name else ''
+    except Resolver404:
+        return ''
+
+
+@register.simple_tag(takes_context=True)
+def url_replace(context, **kwargs):
+    """
+    Encode URL with context.
+    """
+    query = context['request'].GET.copy()
+    if query.get('page') is not None:
+        query.pop('page')
+    query.update(kwargs)
+    return query.urlencode()
+
+
+@register.filter
+def shop_counter(user):
+    """
+    Recipes number in purchase list.
+    """
+    return user.purchases.count()
+
+
+@register.filter
+def is_following(author, user):
+    """
+    Return True if author is followed by user.
+    """
+    return Follow.objects.filter(author=author, user=user).exists()
+
+
+@register.filter
+def is_purchased(recipe, user):
+    """
+    Return True if recipe is in users's purchase list.
+    """
+    return Purchase.objects.filter(recipe=recipe, user=user).exists()
+
+
+@register.filter
+def is_favorite(recipe, user):
+    """
+    Return True if recipe is in users's favorites.
+    """
+    return Favorite.objects.filter(recipe=recipe, user=user).exists()
+
+
+@register.filter
+def add_class(field, css):
+    """
+    Return class for input fields.
+    """
+    return field.as_widget(attrs={"class": css})
+
+
+@register.filter
+def as_p(text, css):
+    """
+    Return HTML markup for text.
+    """
+    return ''.join(list(map(lambda x: f'<p class="{css}">{x}</p>',
+                            text.split('\n'))))
+
+
+@register.filter
+def int_map(value):
+    """
+    Map list of ints.
+    """
+    return list(map(int, value))

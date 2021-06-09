@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}
+  {% if favorites %}
+    Избранное
+  {% else %}
+    Главная
+  {% endif %}
+{% endblock %}
+{% load static %}
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+{% endblock %}
+{% block main %}
+  {% csrf_token %}
+  <div class="main__header">
+    <h1 class="main__title">
+      {% if favorites %}
+        Избранное
+      {% elif author %}
+        {{ author.get_full_name }}
+      {% else %}
+        Рецепты
+      {% endif %}
+    </h1>
+    {% include 'recipes/includes/filter.html' %}
+  </div>
+  {% if user.is_authenticated and author %}
+    <div class="author-subscribe" data-author="{{ author.id }}">
+      <p style="padding: 0 0 2em 0;">
+        {% load user_filters %}
+        {% if author|isfollowing:user %}
+          <button class="button button_style_light-blue button_size_subscribe" name="subscribe">
+            Отписаться от автора
+        {% else %}
+          <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>
+            Подписаться на автора
+        {% endif %}
+        </button>
+      </p>
+    </div>
+  {% endif %}
+  <div class="card-list">
+    {% for recipe in object_list %}
+      {% include "recipes/includes/recipe_card.html" with recipe=recipe %}
+    {% endfor %}
+  </div>
+  {% if is_paginated %}
+    {% include "includes/paginator.html" with items=page_obj paginator=paginator%}
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/config/config.js' %}"></script>
+  <script src="{% static '/js/api/Api.js' %}"></script>
+  <script src="{% static 'js/components/Header.js' %}"></script>
+  <script src="{% static 'js/components/MainCards.js' %}"></script>
+  <script src="{% static 'js/components/CardList.js' %}"></script>
+  <script src="{% static 'js/components/SingleCard.js' %}"></script>
+  <script src="{% static 'js/components/Purchases.js' %}"></script>
+  {% if user.is_authenticated %}
+    <script src="{% static 'js/components/Favorites.js' %}"></script>
+    {% if author %}
+      <script src="{% static 'js/components/Subscribe.js' %}"></script>
+      <script src="{% static 'js/components/AuthorRecipe.js' %}"></script>
+      <script src="{% static 'pages/authorRecipe.js' %}"></script>
+    {% else %}
+      <script src="{% static 'pages/indexAuth.js' %}"></script>
+    {% endif %}
+  {% else %}
+    <script src="{% static 'pages/indexNotAuth.js' %}"></script>
+  {% endif %}
+{% endblock %}
