@@ -34,7 +34,7 @@ def url_replace(context, **kwargs):
 
 
 @register.filter
-def shop_counter(user):
+def shopcounter(user):
     """
     Recipes number in purchase list.
     """
@@ -42,7 +42,7 @@ def shop_counter(user):
 
 
 @register.filter
-def is_following(author, user):
+def isfollowing(author, user):
     """
     Return True if author is followed by user.
     """
@@ -50,7 +50,7 @@ def is_following(author, user):
 
 
 @register.filter
-def is_purchased(recipe, user):
+def ispurchased(recipe, user):
     """
     Return True if recipe is in users's purchase list.
     """
@@ -58,19 +58,11 @@ def is_purchased(recipe, user):
 
 
 @register.filter
-def is_favorite(recipe, user):
+def isfavorite(recipe, user):
     """
     Return True if recipe is in users's favorites.
     """
     return Favorite.objects.filter(recipe=recipe, user=user).exists()
-
-
-@register.filter
-def add_class(field, css):
-    """
-    Return class for input fields.
-    """
-    return field.as_widget(attrs={"class": css})
 
 
 @register.filter
@@ -83,8 +75,16 @@ def as_p(text, css):
 
 
 @register.filter
-def int_map(value):
+def intmap(value):
     """
     Map list of ints.
     """
     return list(map(int, value))
+
+
+@register.filter
+def addclass(field, css):
+    """
+    Return class for input fields.
+    """
+    return field.as_widget(attrs={'class': css})

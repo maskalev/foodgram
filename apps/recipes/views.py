@@ -106,14 +106,14 @@ def add_or_edit_recipe(request, username=None, slug=None):
         recipe = get_object_or_404(Recipe,
                                    author__username=username,
                                    slug=slug)
-
     recipe_form = RecipeForm(request.POST or None, request.FILES or None,
                              instance=recipe)
-
     if recipe_form.is_valid():
         recipe = recipe_form.save(user=request.user)
         return redirect(reverse('recipe', args=(recipe.author, recipe.slug)))
-
+    else:
+        recipe_form = RecipeForm()
+        recipe = Recipe()
     return render(request,
                   'recipes/recipe_form.html',
                   {
