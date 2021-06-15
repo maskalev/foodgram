@@ -82,16 +82,18 @@
         </li>
 
         <li class="single-card__item">
-          {% if recipe.author|isfollowing:user %}
-          <button class="button button_style_light-blue button_size_subscribe"
-                  name="subscribe">
-            Отписаться от автора
-            {% else %}
+          {% if recipe.author != user %}
+            {% if recipe.author|isfollowing:user %}
             <button class="button button_style_light-blue button_size_subscribe"
-                    name="subscribe" data-out>
-              Подписаться на автора
-              {% endif %}
-            </button>
+                    name="subscribe">
+              Отписаться от автора
+              {% else %}
+              <button class="button button_style_light-blue button_size_subscribe"
+                      name="subscribe" data-out>
+                Подписаться на автора
+                {% endif %}
+              </button>
+          {% endif %}
         </li>
       </ul>
     {% endif %}
