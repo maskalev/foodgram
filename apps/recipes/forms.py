@@ -32,7 +32,7 @@ class RecipeForm(ModelForm):
 
     def create_recipeingredients(self, recipe):
         """
-        Create compositions for ingredients.
+        Add ingredients to the new recipe.
         """
         ingredients_to_create = []
         for ingredient_title, quantity in self.ingredients.items():
@@ -97,7 +97,7 @@ class RecipeForm(ModelForm):
         """
         Delete ingredients from recipe.
         """
-        existed_ingredients = recipe.ingredients.all()
+        existed_ingredients = recipe.recipeingredients.all()
         for row in existed_ingredients:
             if ((row.ingredient.title, row.quantity) not in
                     self.ingredients.items()):

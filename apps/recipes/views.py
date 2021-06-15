@@ -99,7 +99,7 @@ class RecipeDetail(DetailView):
 @login_required
 def add_or_edit_recipe(request, username=None, slug=None):
     """
-    Add or update the recipe.
+    Add or edit the recipe.
     """
     recipe = None
     if username is not None and slug is not None:
@@ -111,8 +111,7 @@ def add_or_edit_recipe(request, username=None, slug=None):
     if recipe_form.is_valid():
         recipe = recipe_form.save(user=request.user)
         return redirect(reverse('recipe', args=(recipe.author, recipe.slug)))
-    return render(request,
-                  'recipes/recipe_form.html',
+    return render(request, 'recipes/recipe_form.html',
                   {
                       'form': recipe_form,
                       'recipe': recipe,
