@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -73,7 +74,7 @@ class Recipe(models.Model):
     tags = models.ManyToManyField(
         'Tag',
         related_name='recipes',
-        verbose_name='Тэги',
+        verbose_name='Tag',
     )
     image = models.ImageField(
         upload_to='recipes/',
@@ -227,7 +228,7 @@ class Follow(models.Model):
 
     class Meta:
         verbose_name = 'Follower'
-        verbose_name_plural = 'Follower'
+        verbose_name_plural = 'Followers'
         constraints = [
             models.UniqueConstraint(fields=('author', 'user'),
                                     name='unique_follow_link'),
