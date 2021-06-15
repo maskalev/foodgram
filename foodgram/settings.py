@@ -7,7 +7,9 @@ SECRET_KEY = 'django-insecure-sv3v8^h&dq!x77r*5=@o&=_jkjrtji+wjkh_9#x#ls%a=z#b%_
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*',
+]
 
 
 INSTALLED_APPS = [
@@ -22,6 +24,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps.recipes',
     'apps.api',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -32,6 +35,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'foodgram.urls'
@@ -110,3 +114,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
+
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
