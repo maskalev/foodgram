@@ -35,7 +35,7 @@
     <ul class="single-card__items">
       {% for tag in recipe.tags.all %}
       <li class="single-card__item">
-        <span class="badge badge_style_{{ tag.style }}">{{ tag.title }}</span>
+        <span class="badge badge_style_{{ tag.color }}">{{ tag.title }}</span>
       </li>
       {% endfor %}
     </ul>
@@ -47,7 +47,7 @@
           <p class="single-card__text">
             <span class="icon-user"></span>
             <a href="{% url 'authorlist' recipe.author %}" class="single-card__link">
-              {{ recipe.author.get_full_name }}
+              {{ recipe.author.title }}
             </a>
           </p>
         </li>
@@ -116,7 +116,7 @@
 
 {% block scripts %}
 <script src="{% static 'js/config/config.js' %}"></script>
-<script src="{% static '/js/api/Api.js' %}"></script>
+<script src="{% static 'js/api/Api.js' %}"></script>
 <script src="{% static 'js/components/Header.js' %}"></script>
 <script src="{% static 'js/components/MainCards.js' %}"></script>
 <script src="{% static 'js/components/SingleCard.js' %}"></script>

@@ -10,7 +10,7 @@
     <ul class="card__items">
       {% for tag in recipe.tags.all %}
         <li class="card__item">
-          <span class="badge badge_style_{{ tag.style }}">{{ tag.title }}</span>
+          <span class="badge badge_style_{{ tag.color }}">{{ tag.title }}</span>
         </li>
       {% endfor %}
     </ul>
@@ -22,7 +22,7 @@
       <p class="card__text">
         <span class="icon-user"></span>
         <a href="{% url 'authorlist' recipe.author %}" style="color: black">
-          {{ recipe.author.get_full_name }}
+          {{ recipe.author.title }}
         </a>
       </p>
     </div>

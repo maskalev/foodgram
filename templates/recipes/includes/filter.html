@@ -11,7 +11,7 @@
             {% if tag.id in form.tags.value|intmap %}
             checked="true"
             {% endif %}
-            class="tags__checkbox tags__checkbox_style_{{ tag.style }}"
+            class="tags__checkbox tags__checkbox_style_{{ tag.color }}"
             onChange="this.form.submit()">
         <label for="id_{{ tag.id }}" class="tags__label">
           {{ tag.title }}

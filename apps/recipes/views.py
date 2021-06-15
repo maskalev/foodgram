@@ -111,9 +111,6 @@ def add_or_edit_recipe(request, username=None, slug=None):
     if recipe_form.is_valid():
         recipe = recipe_form.save(user=request.user)
         return redirect(reverse('recipe', args=(recipe.author, recipe.slug)))
-    else:
-        recipe_form = RecipeForm()
-        recipe = Recipe()
     return render(request,
                   'recipes/recipe_form.html',
                   {
@@ -156,9 +153,9 @@ def purchase_list_pdf(request):
     ingredients = request.user.purchases.select_related(
         'recipe'
     ).order_by(
-        'recipe__ingredients__name'
+        'recipe__ingredients__title'
     ).values(
-        'recipe__ingredients__name', 'recipe__ingredients__unit'
-    ).annotate(quantity=Sum('recipe__compositions__quantity')).all()
+        'recipe__ingredients__title', 'recipe__ingredients__unit'
+    ).annotate(quantity=Sum('recipe__recipeingredients__quantity')).all()
 
     return create_pdf(ingredients, 'purchase_list.pdf')

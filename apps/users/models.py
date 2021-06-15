@@ -19,6 +19,7 @@ class User(AbstractUser):
         verbose_name='Email',
         unique=True
     )
+    is_superuser = models.BooleanField(default=False)
 
     def __str__(self):
         return self.username

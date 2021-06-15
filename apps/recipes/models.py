@@ -39,6 +39,11 @@ class Tag(models.Model):
         unique=True,
         verbose_name='Tag slug',
     )
+    color = models.CharField(
+        max_length=20,
+        default='green',
+        verbose_name='Tag color'
+    )
 
     def __str__(self):
         return f'{self.title}'
@@ -80,6 +85,7 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(
         'Ingredient',
         through='RecipeIngredients',
+        related_name='recipes',
         verbose_name='Ingredients',
     )
     pub_date = models.DateTimeField(
@@ -88,12 +94,19 @@ class Recipe(models.Model):
     )
     slug = models.SlugField(
         max_length=250,
+        blank=True,
         unique=True,
         verbose_name='Recipe slug',
     )
 
     def __str__(self):
         return f'{self.title}, {self.author}, {self.pub_date}'
+
+    def get_ingredients(self):
+        """
+        Return recipe ingredients.
+        """
+        return RecipeIngredients.objects.filter(recipe=self.id)
 
     class Meta:
         ordering = ('-pub_date',)

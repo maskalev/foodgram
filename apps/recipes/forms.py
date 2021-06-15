@@ -35,9 +35,9 @@ class RecipeForm(ModelForm):
         Create compositions for ingredients.
         """
         ingredients_to_create = []
-        for ingredient_name, quantity in self.ingredients.items():
+        for ingredient_title, quantity in self.ingredients.items():
             ingredient = get_object_or_404(Ingredient,
-                                           name=ingredient_name)
+                                           title=ingredient_title)
             recipeingredients = RecipeIngredients(recipe=recipe,
                                                   ingredient=ingredient,
                                                   quantity=quantity)
@@ -74,8 +74,8 @@ class RecipeForm(ModelForm):
                     slug = uuid4()
                 recipe.slug = slug
                 recipe.save()
-                self.delete_ingredients(recipe)
-                self.create_ingredients(recipe)
+                self.delete_recipeingredients(recipe)
+                self.create_recipeingredients(recipe)
                 self.save_m2m()
         except IntegrityError as save_error:
             raise BadRequest('Error while saving') from save_error
@@ -93,17 +93,17 @@ class RecipeForm(ModelForm):
                 except ValueError:
                     self.ingredients[ingredient_name] = None
 
-    def delete_ingredients(self, recipe):
+    def delete_recipeingredients(self, recipe):
         """
         Delete ingredients from recipe.
         """
         existed_ingredients = recipe.ingredients.all()
         for row in existed_ingredients:
-            if ((row.ingredient.name, row.quantity) not in
+            if ((row.ingredient.title, row.quantity) not in
                     self.ingredients.items()):
                 row.delete()
             else:
-                del self.ingredients[row.ingredient.name]
+                del self.ingredients[row.ingredient.title]
 
     class Meta:
         model = Recipe
