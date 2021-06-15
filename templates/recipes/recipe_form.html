@@ -20,9 +20,7 @@
     <form class="form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="form__group">
-        <label for="{{ form.title.id_for_label }}" class="form__label">
-          {{ form.title.label }}
-        </label>
+        <label for="{{ form.title.id_for_label }}" class="form__label">Название блюда</label>
         <div class="form__field-group">
           {{ form.title|addclass:"form__input" }}
           <span class="form__error">{{ form.title.errors }}</span>
@@ -94,9 +92,7 @@
         </div>
       </div>
       <div class="form__group">
-        <label for="{{ form.cooking_time.id_for_label}}" class="form__label">
-          {{ form.cooking_time.label }}
-        </label>
+        <label for="{{ form.cooking_time.id_for_label}}" class="form__label">Время приготовления</label>
         <div class="form__field-group form__field-group_time">
 
           {{ form.cooking_time|addclass:"form__input" }}
@@ -105,9 +101,7 @@
         </div>
       </div>
       <div class="form__group">
-        <label for="{{ form.description.id_for_label }}" class="form__label">
-          {{ form.description.label }}
-        </label>
+        <label for="{{ form.description.id_for_label }}" class="form__label">Описание блюда</label>
         <div class="form__field-group">
           {{ form.description|addclass:"form__textarea" }}
           <span class="form__error">{{ form.text.errors }}</span>
