@@ -1,8 +1,11 @@
 {% extends "base.html" %}
+{% block description %}
+  Делись со всеми своими лучшими рецептами.
+{% endblock %}
 {% block title %} Создание рецепта {% endblock %}
 {% load static %}
 {% block styles %}
-<link rel="stylesheet" href="{% static 'pages/form.css' %}">
+  <link rel="stylesheet" href="{% static 'pages/form.css' %}">
 {% endblock %}
 {% block main %}
   <div class="main__header">
@@ -15,7 +18,6 @@
     </h1>
   </div>
   {% load user_filters %}
-
   <div class="form-container">
     <form class="form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
@@ -30,7 +32,7 @@
         <p class="form__label">Теги</p>
         <div class="form__field-group">
           <div class="tags">
-             {% for tag in form.fields.tags.choices.queryset %}
+            {% for tag in form.fields.tags.choices.queryset %}
               <div class="tags__item">
                 <input
                     type="checkbox"
@@ -61,21 +63,19 @@
             <input type="number" id="cantidad" class="form__input form__input_quantity" min="0">
             <label for="cantidad" class="form__label" id="cantidadVal"></label>
           </div>
-
-          <span class="form__ingredient-link"
-                id="addIng">Добавить ингредиент</span>
+          <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
           <div class="form__field-group-ingredientes-container">
-            {% for item in recipe.compositions.all %}
+            {% for item in recipe.recipeingredients.all %}
               {% with forloop.counter as counter %}
                 <div class="form__field-item-ingredient" id="ing_{{ counter }}">
-                  <span> {{ item.ingredient.name }} -
+                  <span> {{ item.ingredient.title }} -
                          {{ item.quantity|floatformat }}
                          {{ item.ingredient.unit }}
                   </span>
                   <span class="form__field-item-delete"></span>
                   <input id="nameIngredient_{{ counter }}"
                          name="nameIngredient_{{ counter }}" type="hidden"
-                         value="{{ item.ingredient.name }}">
+                         value="{{ item.ingredient.title }}">
                   <input id="valueIngredient_{{ counter }}"
                          name="valueIngredient_{{ counter }}" type="hidden"
                          value="{{ item.quantity|floatformat }}">
@@ -85,8 +85,6 @@
                 </div>
               {% endwith %}
             {% endfor %}
-
-
           </div>
           <span class="ingredients-error form__error">{{ form.ingredients.errors }}</span>
         </div>
@@ -94,7 +92,6 @@
       <div class="form__group">
         <label for="{{ form.cooking_time.id_for_label}}" class="form__label">Время приготовления</label>
         <div class="form__field-group form__field-group_time">
-
           {{ form.cooking_time|addclass:"form__input" }}
           <label for="form.cooking_time.id_for_label" class="form__label">минут</label>
           <span class="form__error">{{ form.cooking_time.errors }}</span>
@@ -120,14 +117,12 @@
             Сохранить
             </button>
             {% if user.is_authenticated and user == recipe.author or user.is_superuser %}
-              <a style="margin-left: 2.5em" href="{% url 'confirm_delete' recipe.author recipe.slug %}"
-                 class="form__ingredient-link">Удалить</a>
+              <a style="margin-left: 2.5em" href="{% url 'confirm_delete' recipe.author recipe.slug %}" class="form__ingredient-link">Удалить</a>
             {% endif %}
           {% else %}
             Создать рецепт
             </button>
           {% endif %}
-
       </div>
     </form>
   </div>
@@ -140,4 +135,3 @@
   <script src="{% static 'js/utils/debouncing.js' %}"></script>
   <script src="{% static 'pages/formRecipe.js' %}"></script>
 {% endblock %}
-

@@ -1,6 +1,9 @@
 {% extends "base.html" %}
+{% block description %}
+  Автоматическая генерация списка покупок. Всё, что нужно для приготовления любимых блюд.
+{% endblock %}
 {% block title %}
-  Мои подписки
+  Список покупок
 {% endblock %}
 {% load static %}
 {% block styles %}
@@ -20,22 +23,21 @@
           <div class="recipe recipe_reverse">
             {% load thumbnail %}
             {% thumbnail purchase.recipe.image "90x90" as im %}
-              <img src="{{ im.url }}" alt="{{ purchase.recipe.title }}"
-                   class="recipe__image recipe__image_big">
+              <img src="{{ im.url }}" alt="{{ purchase.recipe.title }}" class="recipe__image recipe__image_big">
             {% endthumbnail %}
             <h3 class="recipe__title">{{ purchase.recipe.title }}</h3>
-           <p class="recipe__text">
-             <span class="icon-time"></span>
-             {{ purchase.recipe.time }} мин.
-           </p>
+            <p class="recipe__text">
+              <span class="icon-time"></span>
+              {{ purchase.recipe.cooking_time }} мин.
+            </p>
           </div>
           <a href="#" class="shopping-list__button link">Удалить</a>
         </li>
       {% endfor %}
     </ul>
-    <a href="{% url 'purchase_list_pdf' %}"><button
-        class="button button_style_blue">Скачать
-                                                         список</button></a>
+    <a href="{% url 'purchase_list_pdf' %}">
+      <button class="button button_style_blue">Скачать список</button>
+    </a>
   </div>
 {% endblock %}
 

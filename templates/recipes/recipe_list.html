@@ -1,7 +1,18 @@
 {% extends "base.html" %}
+{% block description %}
+  {% if favorites %}
+    Лучшие рецепты со всего света
+  {% elif author %}
+    {{ author.title }} сделает вашу жизнь вкуснее
+  {% else %}
+    Рецепты на все случаи жизни. Быстро. Недорого. Вкусно.
+  {% endif %}
+{% endblock %}
 {% block title %}
   {% if favorites %}
     Избранное
+  {% elif author %}
+    Рецепты пользователя {{ author.title }}
   {% else %}
     Главная
   {% endif %}
@@ -17,7 +28,7 @@
       {% if favorites %}
         Избранное
       {% elif author %}
-        {{ author.get_full_name }}
+        {{ author.title }}
       {% else %}
         Рецепты
       {% endif %}
@@ -34,8 +45,8 @@
         {% else %}
           <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>
             Подписаться на автора
+          </button>
         {% endif %}
-        </button>
       </p>
     </div>
   {% endif %}

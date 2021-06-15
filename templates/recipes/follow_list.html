@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block description %}
+  Лучшие рецепты по версии {{ user.title }}
+{% endblock %}
 {% block title %}
   Мои подписки
 {% endblock %}
@@ -13,7 +16,6 @@
       Мои подписки
     </h1>
   </div>
-
   <div class="card-list">
     {% for following in object_list %}
       {% include "recipes/includes/author_card.html" with following=following %}

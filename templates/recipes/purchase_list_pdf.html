@@ -1,13 +1,10 @@
-
-
 <style>
-.main__title { font-family: Courier }
+  main__title { font-family: Courier }
 </style>
-
 {% block content %}
   <main class="main container">
     <div class="main__header">
-      <h1 class="main__title" style="font-family: Helvetica;">
+      <h1 class="main__title" style="font-family: Arial;">
         Список покупок
       </h1>
     </div>
@@ -17,7 +14,7 @@
           <li class="shopping-list__item" data-id="{{ purchase.recipe.id }}">
             <div class="recipe recipe_reverse">
               <h3 class="recipe__title" style="max-width: 300px;">
-                {{ ingredient.recipe__ingredients__name }},
+                {{ ingredient.recipe__ingredients__title }},
                 {{ ingredient.recipe__ingredients__unit }}
               </h3>
             </div>
@@ -27,7 +24,6 @@
           </li>
         {% endfor %}
       </ul>
-
     </div>
   </main>
 {% endblock %}
