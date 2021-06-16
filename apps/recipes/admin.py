@@ -30,7 +30,7 @@ class RecipeAdmin(admin.ModelAdmin):
         'title',
         'tags',
     )
-    prepopulated_fields = {'slug': ('title', 'author')}
+    prepopulated_fields = {'slug': ('title',)}
     inlines = [
         RecipeIngredientsInline,
     ]
@@ -45,10 +45,6 @@ class TagAdmin(admin.ModelAdmin):
         'title',
         'slug',
         'color',
-    )
-    search_fields = (
-        'title',
-        'slug',
     )
     prepopulated_fields = {'slug': ('title',)}
 
