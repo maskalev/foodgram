@@ -134,3 +134,6 @@ static/
 
 TODO.py
 .assets
+
+
+sent_emails/
