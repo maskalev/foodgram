@@ -9,6 +9,7 @@ from apps.recipes.forms import TagForm, RecipeForm
 from apps.recipes.models import Follow, Purchase, Recipe, Tag
 from apps.recipes.utils import create_pdf
 from apps.users.models import User
+from foodgram.settings import PAGINATOR
 
 
 class FollowList(LoginRequiredMixin, ListView):
@@ -16,7 +17,7 @@ class FollowList(LoginRequiredMixin, ListView):
     ListView for following's page of the user.
     """
     model = Follow
-    paginate_by = 6
+    paginate_by = PAGINATOR
 
     def get_queryset(self):
         return Follow.objects.filter(user=self.request.user)
@@ -37,7 +38,7 @@ class RecipeList(ListView):
     ListView for recipes.
     """
     model = Recipe
-    paginate_by = 6
+    paginate_by = PAGINATOR
 
     def get_queryset(self):
         default_filter = Tag.objects.values_list('id')
@@ -156,5 +157,4 @@ def purchase_list_pdf(request):
     ).values(
         'recipe__ingredients__title', 'recipe__ingredients__unit'
     ).annotate(quantity=Sum('recipe__recipeingredients__quantity')).all()
-
     return create_pdf(ingredients, 'purchase_list.pdf')
