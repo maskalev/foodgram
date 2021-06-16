@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}О сайте{% endblock %}
+{% load static %}
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+{% endblock %}
+{% block main %}
+  <div class="main__header">
+    <h1 class="main__title">О продуктовом помощнике</h1>
+  </div>
+  <div class="custom-center-block">
+    <p class="custom-text-block">
+      Продуктовый помощник - это онлайн-сервис, где пользователи смогут публиковать рецепты, подписываться на публикации
+      других пользователей, добавлять понравившиеся рецепты в список «Избранное», а перед походом в магазин скачивать
+      сводный список продуктов, необходимых для приготовления одного или нескольких выбранных блюд.
+    </p>
+    <p class="custom-text-block">
+      Дипломный проект студента Яндекс.Практикума (факультет веб-разработки).
+    </p>
+    <div class="custom-button-block">
+      <a href="{% url 'index' %}" class="button button_style_blue">Перейти на главную</a>
+    </div>
+  </div>
+{% endblock %}
