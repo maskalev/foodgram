@@ -12,33 +12,13 @@ from apps.users.models import User
 from foodgram.settings import PAGINATOR
 
 
-class FollowList(LoginRequiredMixin, ListView):
-    """
-    ListView for following's page of the user.
-    """
-    model = Follow
-    paginate_by = PAGINATOR
-
-    def get_queryset(self):
-        return Follow.objects.filter(user=self.request.user)
-
-
-class PurchaseList(LoginRequiredMixin, ListView):
-    """
-    ListView for recipes in purchase list.
-    """
-    model = Purchase
-
-    def get_queryset(self):
-        return Purchase.objects.filter(user=self.request.user)
-
-
 class RecipeList(ListView):
     """
     ListView for recipes.
     """
     model = Recipe
     paginate_by = PAGINATOR
+    template_name = 'recipes/recipe_list.html'
 
     def get_queryset(self):
         default_filter = Tag.objects.values_list('id')
@@ -49,22 +29,6 @@ class RecipeList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = TagForm(self.request.GET or None)
-        return context
-
-
-class FavoritesList(LoginRequiredMixin, RecipeList):
-    """
-    ListView for favorites page.
-    """
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        all_favorites = self.request.user.favorites.all().values('recipe')
-        return queryset.filter(id__in=all_favorites)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['favorites'] = True
         return context
 
 
@@ -95,6 +59,46 @@ class RecipeDetail(DetailView):
     DetailView for recipe.
     """
     model = Recipe
+    template_name = 'recipes/recipe_detail.html'
+
+
+class FavoritesList(LoginRequiredMixin, RecipeList):
+    """
+    ListView for favorites page.
+    """
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        all_favorites = self.request.user.favorites.all().values('recipe')
+        return queryset.filter(id__in=all_favorites)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['favorites'] = True
+        return context
+
+
+class FollowList(LoginRequiredMixin, ListView):
+    """
+    ListView for following's page of the user.
+    """
+    model = Follow
+    paginate_by = PAGINATOR
+    template_name = 'recipes/follow_list.html'
+
+    def get_queryset(self):
+        return Follow.objects.filter(user=self.request.user)
+
+
+class PurchaseList(LoginRequiredMixin, ListView):
+    """
+    ListView for recipes in purchase list.
+    """
+    model = Purchase
+    template_name = 'recipes/purchase_list.html'
+
+    def get_queryset(self):
+        return Purchase.objects.filter(user=self.request.user)
 
 
 @login_required
