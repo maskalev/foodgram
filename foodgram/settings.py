@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps.recipes',
     'apps.api',
+    'apps.about',
     'debug_toolbar',
 ]
 
