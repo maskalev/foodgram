@@ -88,3 +88,17 @@ def addclass(field, css):
     Return class for input fields.
     """
     return field.as_widget(attrs={'class': css})
+
+
+@register.filter
+def remainsrecipesnumber(numder):
+    """
+    Return correct end of the phrase.
+    """
+    remains = numder % 10 - 3
+    if remains == 1:
+        return f'Ещё {remains} рецепт...'
+    elif remains < 5:
+        return f'Ещё {remains} рецепта...'
+    else:
+        return f'Ещё {remains} рецептов...'

@@ -19,17 +19,17 @@
           </div>
         </li>
       {% endfor %}
+      {% load user_filters %}
       {% if following.author.recipes.all.count > 3 %}
         <li class="card-user__item">
           <a href="{% url 'authorlist' following.author %}" class="card-user__link link">
-            Еще {{ following.author.recipes.all.count|add:"-3" }} рецептов...
+            {{ following.author.recipes.all.count|remainsrecipesnumber }}
           </a>
         </li>
       {% endif %}
     </ul>
   </div>
   <div class="card-user__footer">
-    {% load user_filters %}
     {% if following.author|isfollowing:user %}
       <button class="button button_style_light-blue button_size_auto" name="subscribe">
       Отписаться
