@@ -162,3 +162,12 @@ def purchase_list_pdf(request):
         'recipe__ingredients__title', 'recipe__ingredients__unit'
     ).annotate(quantity=Sum('recipe__recipeingredients__quantity')).all()
     return create_pdf(ingredients, 'purchase_list.pdf')
+
+
+def page_not_found(request, exception):
+    return render(
+        request,
+        'misc/404.html',
+        {'path': request.path},
+        status=404
+    )
