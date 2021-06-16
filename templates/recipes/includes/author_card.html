@@ -7,10 +7,12 @@
       {% for recipe in following.author.recipes.all|slice:"0:3" %}
         <li class="card-user__item">
           <div class="recipe">
-            {% load thumbnail %}
-            {% thumbnail recipe.image "72x72" as im %}
-              <img src="{{ im.url }}" alt="{{ recipe.title }}" class="recipe__image">
-            {% endthumbnail %}
+            <a class="card__title link" href="{% url 'recipe' recipe.author.username recipe.slug %}">
+              {% load thumbnail %}
+              {% thumbnail recipe.image "72x72" as im %}
+                <img src="{{ im.url }}" alt="{{ recipe.title }}" class="recipe__image">
+              {% endthumbnail %}
+            </a>
             <h3 class="recipe__title">{{ recipe.title }}</h3>
             <p class="recipe__text">
               <span class="icon-time"></span>
