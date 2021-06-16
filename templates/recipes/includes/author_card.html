@@ -22,7 +22,7 @@
       {% if following.author.recipes.all.count > 3 %}
         <li class="card-user__item">
           <a href="{% url 'authorlist' following.author %}" class="card-user__link link">
-            Все рецепты пользователя
+            Еще {{ following.author.recipes.all.count|add:"-3" }} рецептов...
           </a>
         </li>
       {% endif %}
