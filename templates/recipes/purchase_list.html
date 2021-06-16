@@ -21,10 +21,12 @@
       {% for purchase in object_list %}
         <li class="shopping-list__item" data-id="{{ purchase.recipe.id }}">
           <div class="recipe recipe_reverse">
-            {% load thumbnail %}
-            {% thumbnail purchase.recipe.image "90x90" as im %}
-              <img src="{{ im.url }}" alt="{{ purchase.recipe.title }}" class="recipe__image recipe__image_big">
-            {% endthumbnail %}
+            <a class="card__title link" href="{% url 'recipe' purchase.recipe.author.username purchase.recipe.slug %}">
+              {% load thumbnail %}
+              {% thumbnail purchase.recipe.image "90x90" as im %}
+                <img src="{{ im.url }}" alt="{{ purchase.recipe.title }}" class="recipe__image recipe__image_big">
+              {% endthumbnail %}
+            </a>
             <h3 class="recipe__title">{{ purchase.recipe.title }}</h3>
             <p class="recipe__text">
               <span class="icon-time"></span>
