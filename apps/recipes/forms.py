@@ -1,13 +1,13 @@
 from uuid import uuid4
 
 from django.core.exceptions import BadRequest, ValidationError
-from django.db import transaction, IntegrityError
-from django.forms import (ModelForm, SelectMultiple, Textarea,
-                          CheckboxSelectMultiple)
+from django.db import IntegrityError, transaction
+from django.forms import (CheckboxSelectMultiple, ModelForm, SelectMultiple,
+                          Textarea)
 from django.shortcuts import get_object_or_404
 from pytils.translit import slugify
 
-from apps.recipes.models import Recipe, Ingredient, RecipeIngredients
+from apps.recipes.models import Ingredient, Recipe, RecipeIngredients
 
 
 class TagForm(ModelForm):

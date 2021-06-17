@@ -1,13 +1,13 @@
 from django.http import JsonResponse
-from rest_framework import viewsets, status
+from rest_framework import status, viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
-from apps.api.serializers import (FavoriteSerializer, PurchaseSerializer,
-                                  FollowSerializer, IngredientSerializer)
-from apps.recipes.models import Favorite, Purchase, Follow, Ingredient
+from apps.api.serializers import (FavoriteSerializer, FollowSerializer,
+                                  IngredientSerializer, PurchaseSerializer)
+from apps.recipes.models import Favorite, Follow, Ingredient, Purchase
 
 
 class CreateDestroyView(viewsets.ModelViewSet):

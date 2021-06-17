@@ -3,9 +3,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from django.views.generic import ListView, DetailView
+from django.views.generic import DetailView, ListView
 
-from apps.recipes.forms import TagForm, RecipeForm
+from apps.recipes.forms import RecipeForm, TagForm
 from apps.recipes.models import Follow, Purchase, Recipe, Tag
 from apps.recipes.utils import create_pdf
 from apps.users.models import User
