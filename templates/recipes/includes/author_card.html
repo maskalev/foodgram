@@ -1,0 +1,44 @@
+<div class="card-user" data-author="{{ following.author.id }}">
+  <div class="card-user__header">
+    <h2 class="card-user__title">{{ following.author.title }}</h2>
+  </div>
+  <div class="card-user__body">
+    <ul class="card-user__items">
+      {% for recipe in following.author.recipes.all|slice:"0:3" %}
+        <li class="card-user__item">
+          <div class="recipe">
+            <a class="card__title link" href="{% url 'recipe' recipe.author.username recipe.slug %}">
+              {% load thumbnail %}
+              {% thumbnail recipe.image "72x72" as im %}
+                <img src="{{ im.url }}" alt="{{ recipe.title }}" class="recipe__image">
+              {% endthumbnail %}
+            </a>
+            <h3 class="recipe__title">{{ recipe.title }}</h3>
+            <p class="recipe__text">
+              <span class="icon-time"></span>
+                {{ recipe.cooking_time}} мин.
+            </p>
+          </div>
+        </li>
+      {% endfor %}
+      {% load user_filters %}
+      {% if following.author.recipes.all.count > 3 %}
+        <li class="card-user__item">
+          <a href="{% url 'authorlist' following.author %}" class="card-user__link link">
+            {{ following.author.recipes.all.count|remainsrecipesnumber }}
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+  <div class="card-user__footer">
+    {% if following.author|isfollowing:user %}
+      <button class="button button_style_light-blue button_size_auto" name="subscribe">
+      Отписаться
+    {% else %}
+      <button class="button button_style_light-blue button_size_auto" name="subscribe" data-out>
+      Подписаться на автора
+    {% endif %}
+    </button>
+  </div>
+</div>
