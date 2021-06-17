@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from rest_framework import mixins, viewsets, status
+from rest_framework import viewsets, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -10,9 +10,7 @@ from apps.api.serializers import (FavoriteSerializer, PurchaseSerializer,
 from apps.recipes.models import Favorite, Purchase, Follow, Ingredient
 
 
-class CreateDestroyView(mixins.CreateModelMixin,
-                        mixins.DestroyModelMixin,
-                        viewsets.GenericViewSet):
+class CreateDestroyView(viewsets.ModelViewSet):
     """
     Create and destroy viewset.
     """
