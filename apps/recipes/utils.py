@@ -2,7 +2,7 @@ import io
 import os
 
 from django.http import FileResponse
-from reportlab.pdfbase import ttfonts, pdfmetrics
+from reportlab.pdfbase import pdfmetrics, ttfonts
 from reportlab.pdfgen import canvas
 
 from foodgram import settings

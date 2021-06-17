@@ -133,7 +133,11 @@ media/
 static/
 
 TODO.py
-.assets
-
 
 sent_emails/
+
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover

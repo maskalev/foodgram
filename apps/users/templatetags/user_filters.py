@@ -1,8 +1,8 @@
 """Projects filters."""
 from django import template
-from django.urls import resolve, Resolver404
+from django.urls import Resolver404, resolve
 
-from apps.recipes.models import Favorite, Purchase, Follow
+from apps.recipes.models import Favorite, Follow, Purchase
 
 register = template.Library()
 
