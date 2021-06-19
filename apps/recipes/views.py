@@ -15,14 +15,6 @@ from apps.users.models import User
 from foodgram.settings import PAGINATOR, LOGIN_URL
 
 
-def check_user(request, *args, **kwargs):
-    print(HttpRequest().path)
-    return HttpRequest().path == 'GET /root/recipe/chaj/edit/ HTTP/1.1'
-    # return request.username == 'testuser'
-    # return urllib.parse.urlparse(httprequest.path).path == 'root'
-    # if request.user.is_superuser or request.user.i :
-
-
 class RecipeList(ListView):
     """
     ListView for recipes.
@@ -113,7 +105,6 @@ class PurchaseList(LoginRequiredMixin, ListView):
 
 
 @login_required
-# @user_passes_test(check_user, login_url=LOGIN_URL)
 def add_or_edit_recipe(request, username=None, slug=None):
     """
     Add or edit the recipe.
@@ -154,7 +145,7 @@ def confirm_delete(request, username, slug):
     Confirmation to delete the recipe.
     """
     return render(request,
-                  'recipes/recipe_delete.html',
+                  'recipes/recipe_confirm_delete.html',
                   {
                       'username': username,
                       'slug': slug,
@@ -182,4 +173,13 @@ def page_not_found(request, exception):
         'misc/404.html',
         {'path': request.path},
         status=404
+    )
+
+
+def server_error(request):
+    return render(
+        request,
+        'misc/500.html',
+        {'path': request.path},
+        status=500
     )
