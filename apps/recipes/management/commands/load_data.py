@@ -1,6 +1,7 @@
 import csv
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
+from django.db import IntegrityError
 
 from apps.recipes.models import Ingredient
 
@@ -16,5 +17,8 @@ class Command(BaseCommand):
                 for row in file_reader:
                     title, unit = row
                     Ingredient.objects.get_or_create(title=title, unit=unit)
-        except Exception:
-            raise CommandError('Ingredients was not upload!')
+        except IntegrityError:
+            print('Ingredients was not upload! Ingredients are not unique.')
+        except ValueError:
+            print('Ingredients was not upload! '
+                  'One of ingredients have no unit.')
