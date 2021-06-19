@@ -1,6 +1,9 @@
-from django.contrib.auth.decorators import login_required
+import urllib
+
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
+from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
@@ -9,7 +12,15 @@ from apps.recipes.forms import RecipeForm, TagForm
 from apps.recipes.models import Follow, Purchase, Recipe, Tag
 from apps.recipes.utils import create_pdf
 from apps.users.models import User
-from foodgram.settings import PAGINATOR
+from foodgram.settings import PAGINATOR, LOGIN_URL
+
+
+def check_user(request, *args, **kwargs):
+    print(HttpRequest().path)
+    return HttpRequest().path == 'GET /root/recipe/chaj/edit/ HTTP/1.1'
+    # return request.username == 'testuser'
+    # return urllib.parse.urlparse(httprequest.path).path == 'root'
+    # if request.user.is_superuser or request.user.i :
 
 
 class RecipeList(ListView):
@@ -102,6 +113,7 @@ class PurchaseList(LoginRequiredMixin, ListView):
 
 
 @login_required
+# @user_passes_test(check_user, login_url=LOGIN_URL)
 def add_or_edit_recipe(request, username=None, slug=None):
     """
     Add or edit the recipe.

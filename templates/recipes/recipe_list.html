@@ -3,7 +3,7 @@
   {% if favorites %}
     Лучшие рецепты со всего света
   {% elif author %}
-    {{ author.title }} сделает вашу жизнь вкуснее
+    {{ author.name }} сделает вашу жизнь вкуснее
   {% else %}
     Рецепты на все случаи жизни. Быстро. Недорого. Вкусно.
   {% endif %}
@@ -12,7 +12,7 @@
   {% if favorites %}
     Избранное
   {% elif author %}
-    Рецепты пользователя {{ author.title }}
+    Рецепты пользователя {{ author.name }}
   {% else %}
     Главная
   {% endif %}
@@ -28,7 +28,7 @@
       {% if favorites %}
         Избранное
       {% elif author %}
-        {{ author.title }}
+        {{ author.name }}
       {% else %}
         Рецепты
       {% endif %}
