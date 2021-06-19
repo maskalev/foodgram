@@ -131,6 +131,7 @@ dmypy.json
 # media and static files
 media/
 static/
+assets/
 
 TODO.py
 
@@ -141,3 +142,5 @@ htmlcov/
 .coverage.*
 coverage.xml
 *.cover
+
+
