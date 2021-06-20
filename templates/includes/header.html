@@ -18,10 +18,8 @@
           </li>
           <li class="nav__item {% active_page request 'purchases' %}">
             <a href="{% url 'purchases' %}" class="nav__link link">Список покупок</a>
-              <span class="badge badge_style_blue nav__badge" id="counter">
-                {% load user_filters %}
-                {{ user|shopcounter }}
-              </span>
+              <span class="badge badge_style_blue nav__badge"
+                    id="counter">{% if user|shopcounter > 0 %}{{ user|shopcounter }}{% endif %}</span>
           </li>
         {% endif %}
       </ul>
