@@ -114,6 +114,8 @@ def add_or_edit_recipe(request, username=None, slug=None):
         recipe = get_object_or_404(Recipe,
                                    author__username=username,
                                    slug=slug)
+    if request.user != recipe.author and request.user.is_superuser is False:
+        return redirect('index')
     recipe_form = RecipeForm(request.POST or None, request.FILES or None,
                              instance=recipe)
     if recipe_form.is_valid():
