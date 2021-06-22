@@ -2,7 +2,13 @@
 {% block description %}
   Делись со всеми своими лучшими рецептами.
 {% endblock %}
-{% block title %} Создание рецепта {% endblock %}
+{% block title %}
+  {% if recipe %}
+    Редактирование рецепта
+  {% else %}
+    Создание рецепта
+  {% endif %}
+{% endblock %}
 {% load static %}
 {% block styles %}
   <link rel="stylesheet" href="{% static 'pages/form.css' %}">
