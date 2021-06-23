@@ -13,6 +13,7 @@ from apps.recipes.models import Follow, Purchase, Recipe, Tag
 from apps.recipes.utils import create_pdf
 from apps.users.models import User
 from foodgram.settings import PAGINATOR, LOGIN_URL
+from foodgram.urls import handler404
 
 
 class RecipeList(ListView):
@@ -39,7 +40,6 @@ class AuthorList(RecipeList):
     """
     List view for recipes by one author.
     """
-
     def get_queryset(self):
         queryset = super().get_queryset()
         author = get_object_or_404(User, username=self.kwargs['username'])
@@ -49,10 +49,11 @@ class AuthorList(RecipeList):
         context = super().get_context_data(**kwargs)
         author = get_object_or_404(User, username=self.kwargs['username'])
         context['author'] = author
-        following = (Follow.objects.filter(author=author,
-                                           user=self.request.user).exists()
-                     if self.request.user.is_authenticated
-                     else False)
+        if self.request.user.is_authenticated:
+            following = Follow.objects.filter(author=author,
+                                              user=self.request.user).exists()
+        else:
+            following = False
         context['following'] = following
         return context
 
@@ -69,7 +70,6 @@ class FavoritesList(LoginRequiredMixin, RecipeList):
     """
     ListView for favorites page.
     """
-
     def get_queryset(self):
         queryset = super().get_queryset()
         all_favorites = self.request.user.favorites.all().values('recipe')
@@ -110,6 +110,7 @@ def add_or_edit_recipe(request, username=None, slug=None):
     Add or edit the recipe.
     """
     recipe = None
+    user = get_object_or_404(User, username=request.user.username)
     if username is not None and slug is not None:
         recipe = get_object_or_404(Recipe,
                                    author__username=username,

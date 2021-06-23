@@ -70,8 +70,6 @@ class RecipeForm(ModelForm):
                 if recipe.author_id is None:
                     recipe.author = user
                 slug = slugify(self.cleaned_data['title'])
-                if Recipe.objects.filter(slug=slug).exists():
-                    slug = uuid4()
                 recipe.slug = slug
                 recipe.save()
                 self.create_recipe_ingredients(recipe)
