@@ -175,3 +175,12 @@ def server_error(request):
         {'path': request.path},
         status=500
     )
+
+
+def bad_request(request, exception):
+    return render(
+        request,
+        'misc/400.html',
+        {'path': request.path},
+        status=400
+    )
