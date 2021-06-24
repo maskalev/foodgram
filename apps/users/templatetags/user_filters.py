@@ -66,15 +66,6 @@ def isfavorite(recipe, user):
 
 
 @register.filter
-def as_p(text, css):
-    """
-    Return HTML markup for text.
-    """
-    return ''.join(list(map(lambda x: f'<p class="{css}">{x}</p>',
-                            text.split('\n'))))
-
-
-@register.filter
 def intmap(value):
     """
     Map list of ints.
