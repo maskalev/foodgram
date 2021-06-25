@@ -6,7 +6,7 @@ class User(AbstractUser):
     """
     Custom user model.
     """
-    title = models.CharField(
+    name = models.CharField(
         verbose_name='Name',
         max_length=256,
     )

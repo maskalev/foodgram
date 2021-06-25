@@ -22,33 +22,15 @@
       <p class="card__text">
         <span class="icon-user"></span>
         <a href="{% url 'authorlist' recipe.author %}" style="color: black">
-          {{ recipe.author.title }}
+          {{ recipe.author.name }}
         </a>
       </p>
     </div>
   </div>
   {% if user.is_authenticated %}
     <div class="card__footer">
-      {% load user_filters %}
-      {% if recipe|ispurchased:user %}
-        <button class="button button_style_light-blue-outline" name="purchases">
-          <span class="icon-check button__icon"></span>
-          Рецепт добавлен
-        </button>
-      {% else %}
-        <button class="button button_style_light-blue" name="purchases" data-out>
-          <span class="icon-plus button__icon"></span>
-          Добавить в покупки
-        </button>
-      {% endif %}
-      <button class="button button_style_none" name="favorites"
-        {% if recipe|isfavorite:user %}>
-          <span class="icon-favorite icon-favorite_active"></span>
-        {% else %}
-          data-out="true">
-          <span class="icon-favorite"></span>
-        {% endif %}
-      </button>
+      {% include 'recipes/includes/buttons/purchase_button.html' %}
+      {% include 'recipes/includes/buttons/favorite_button.html' %}
     </div>
   {% endif %}
 </div>

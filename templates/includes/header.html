@@ -3,25 +3,28 @@
     <div class="nav__container container">
       <ul class="nav__items list">
         {% load user_filters %}
-        <li class="nav__item {% active_page request 'index' %}">
-          <a href="{% url 'index' %}" class="nav__link link">Рецепты</a>
+        {% url "index" as index_url %}
+        <li class="nav__item {% if index_url == request.path %}nav__item_active{% endif %}">
+          <a href="{{ index_url }}" class="nav__link link">Рецепты</a>
         </li>
         {% if user.is_authenticated %}
-          <li class="nav__item {% active_page request 'subscriptions' %}">
-            <a href="{% url 'subscriptions' %}" class="nav__link link">Мои подписки</a>
+          {% url "subscriptions" as subscriptions_url %}
+          <li class="nav__item {% if subscriptions_url == request.path %}nav__item_active{% endif %}">
+            <a href="{{ subscriptions_url }}" class="nav__link link">Мои подписки</a>
           </li>
-          <li class="nav__item {% active_page request 'add_recipe' %}">
-            <a href="{% url 'add_recipe' %}" class="nav__link link">Создать рецепт</a>
+          {% url "add_recipe" as add_recipe_url %}
+          <li class="nav__item {% if add_recipe_url == request.path %}nav__item_active{% endif %}">
+            <a href="{{ add_recipe_url }}" class="nav__link link">Создать рецепт</a>
           </li>
-          <li class="nav__item {% active_page request 'favorites' %}">
-            <a href="{% url 'favorites' %}" class="nav__link link">Избранное</a>
+          {% url "favorites" as favorites_url %}
+          <li class="nav__item {% if favorites_url == request.path %}nav__item_active{% endif %}">
+            <a href="{{ favorites_url }}" class="nav__link link">Избранное</a>
           </li>
-          <li class="nav__item {% active_page request 'purchases' %}">
-            <a href="{% url 'purchases' %}" class="nav__link link">Список покупок</a>
-              <span class="badge badge_style_blue nav__badge" id="counter">
-                {% load user_filters %}
-                {{ user|shopcounter }}
-              </span>
+          {% url "purchases" as purchases_url %}
+          <li class="nav__item {% if purchases_url == request.path %}nav__item_active{% endif %}">
+            <a href="{{ purchases_url }}" class="nav__link link">Список покупок</a>
+            <span class="badge badge_style_blue nav__badge"
+                  id="counter">{% if user|shopcounter > 0 %}{{ user|shopcounter }}{% endif %}</span>
           </li>
         {% endif %}
       </ul>

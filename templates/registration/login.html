@@ -11,11 +11,10 @@
   {% if next %}
     {% if user.is_authenticated %}
       <p>
-        Your account doesn't have access to this page. To proceed,
-        please login with an account that has access.
+        У вас нет доступа к запрашиваемой странице. Войдите в аккаунт, у которого есть такой доступ.
       </p>
     {% else %}
-      <p>Please login to see this page.</p>
+      <p>Зарегистрируйтесь, чотбы продолжить</p>
     {% endif %}
   {% endif %}
   {% load user_filters %}

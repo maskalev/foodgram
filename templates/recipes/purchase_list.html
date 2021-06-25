@@ -37,9 +37,12 @@
         </li>
       {% endfor %}
     </ul>
-    <a href="{% url 'purchase_list_pdf' %}">
-      <button class="button button_style_blue">Скачать список</button>
-    </a>
+    {% load user_filters %}
+    {% if user|shopcounter > 0 %}
+      <a href="{% url 'purchase_list_pdf' %}">
+        <button class="button button_style_blue">Скачать список</button>
+      </a>
+    {% endif %}
   </div>
 {% endblock %}
 

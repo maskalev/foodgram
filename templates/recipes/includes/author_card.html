@@ -1,6 +1,6 @@
 <div class="card-user" data-author="{{ following.author.id }}">
   <div class="card-user__header">
-    <h2 class="card-user__title">{{ following.author.title }}</h2>
+    <h2 class="card-user__title">{{ following.author.name }}</h2>
   </div>
   <div class="card-user__body">
     <ul class="card-user__items">
@@ -32,13 +32,6 @@
     </ul>
   </div>
   <div class="card-user__footer">
-    {% if following.author|isfollowing:user %}
-      <button class="button button_style_light-blue button_size_auto" name="subscribe">
-      Отписаться
-    {% else %}
-      <button class="button button_style_light-blue button_size_auto" name="subscribe" data-out>
-      Подписаться на автора
-    {% endif %}
-    </button>
+    {% include 'recipes/includes/buttons/subscribe_button.html' with author=following.author%}
   </div>
 </div>

@@ -1,11 +1,12 @@
 import io
-import os
 
 from django.http import FileResponse
 from reportlab.pdfbase import pdfmetrics, ttfonts
 from reportlab.pdfgen import canvas
 
-from foodgram import settings
+from foodgram.settings import (PDF_BODY_FONTSIZE, PDF_HEAD_FONTSIZE,
+                               PDF_HEAD_TEXT, PDF_HEAD_X, PDF_HEAD_Y,
+                               PDF_TYPEFACE, STATIC_ROOT)
 
 
 def create_pdf(ingredients, filename):
@@ -13,15 +14,13 @@ def create_pdf(ingredients, filename):
     Create purchase list.
     """
     def print_head():
-        pdf_canvas.setFont('Arial', 40)
-        pdf_canvas.drawString(150, 800, 'Список покупок')
-        pdf_canvas.setFont('Arial', 20)
+        pdf_canvas.setFont(PDF_TYPEFACE, PDF_HEAD_FONTSIZE)
+        pdf_canvas.drawString(PDF_HEAD_X, PDF_HEAD_Y, PDF_HEAD_TEXT)
+        pdf_canvas.setFont(PDF_TYPEFACE, PDF_BODY_FONTSIZE)
 
     buffer = io.BytesIO()
     pdf_canvas = canvas.Canvas(buffer)
-    font = ttfonts.TTFont('Arial', os.path.join(settings.BASE_DIR,
-                                                'static', 'fonts',
-                                                'arial.ttf'))
+    font = ttfonts.TTFont(PDF_TYPEFACE, STATIC_ROOT / 'fonts/arial.ttf')
     pdfmetrics.registerFont(font)
     print_head()
     line_y = -1

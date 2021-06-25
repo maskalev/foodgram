@@ -2,7 +2,13 @@
 {% block description %}
   Делись со всеми своими лучшими рецептами.
 {% endblock %}
-{% block title %} Создание рецепта {% endblock %}
+{% block title %}
+  {% if recipe %}
+    Редактирование рецепта
+  {% else %}
+    Создание рецепта
+  {% endif %}
+{% endblock %}
 {% load static %}
 {% block styles %}
   <link rel="stylesheet" href="{% static 'pages/form.css' %}">
@@ -19,7 +25,7 @@
   </div>
   {% load user_filters %}
   <div class="form-container">
-    <form class="form" method="post" enctype="multipart/form-data">
+    <form class="form" method="post" enctype="multipart/form-data" action="{% if recipe %}{% url 'edit_recipe' recipe.author.username recipe.slug %}{% else %}{% url 'add_recipe' %}{% endif %}">
       {% csrf_token %}
       <div class="form__group">
         <label for="{{ form.title.id_for_label }}" class="form__label">Название блюда</label>
@@ -117,7 +123,7 @@
             Сохранить
             </button>
             {% if user.is_authenticated and user == recipe.author or user.is_superuser %}
-              <a style="margin-left: 2.5em" href="{% url 'confirm_delete' recipe.author recipe.slug %}" class="form__ingredient-link">Удалить</a>
+              <a style="margin-left: 2.5em" href="{% url 'delete_recipe' recipe.author recipe.slug %}" class="form__ingredient-link">Удалить</a>
             {% endif %}
           {% else %}
             Создать рецепт

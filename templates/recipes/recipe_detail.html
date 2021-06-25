@@ -52,7 +52,7 @@
             <p class="single-card__text">
               <span class="icon-user"></span>
               <a href="{% url 'authorlist' recipe.author %}" class="single-card__link">
-                {{ recipe.author.title }}
+                {{ recipe.author.name }}
               </a>
             </p>
           </li>
@@ -68,29 +68,11 @@
       {% if user.is_authenticated %}
         <ul class="single-card__items">
           <li class="single-card__item">
-            {% load user_filters %}
-            {% if recipe|ispurchased:user %}
-              <button class="button button_style_light-blue-outline" name="purchases">
-                <span class="icon-check button__icon"></span>
-                Рецепт добавлен
-              </button>
-            {% else %}
-              <button class="button button_style_blue" name="purchases" data-out>
-                <span class="icon-plus"></span>
-                Добавить в покупки
-              </button>
-            {% endif %}
+            {% include 'recipes/includes/buttons/purchase_button.html' %}
           </li>
           <li class="single-card__item">
             {% if recipe.author != user %}
-              {% if recipe.author|isfollowing:user %}
-                <button class="button button_style_light-blue button_size_subscribe" name="subscribe">
-                Отписаться от автора
-              {% else %}
-                <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>
-                Подписаться на автора
-                </button>
-              {% endif %}
+              {% include 'recipes/includes/buttons/subscribe_button.html' with author=recipe.author%}
             {% endif %}
           </li>
         </ul>
@@ -108,7 +90,7 @@
       </div>
       <div class="single-card__section">
         <h3 class="single-card__section-title">Описание:</h3>
-        {{ recipe.description|as_p:"single-card__section-text"|safe }}
+        <p class=" single-card__section-text">{{ recipe.description }}</p>
       </div>
     </div>
   </div>

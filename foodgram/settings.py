@@ -13,6 +13,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 DEBUG = False
 
+
 ALLOWED_HOSTS = [
     '*',
 ]
@@ -122,7 +123,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
 
@@ -138,3 +139,11 @@ PAGINATOR = 6
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 
 EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+
+
+PDF_TYPEFACE = 'Arial'
+PDF_HEAD_FONTSIZE = 40
+PDF_HEAD_X = 150
+PDF_HEAD_Y = 800
+PDF_HEAD_TEXT = 'Список покупок'
+PDF_BODY_FONTSIZE = 20

@@ -1,5 +1,3 @@
-from uuid import uuid4
-
 from django.core.exceptions import BadRequest, ValidationError
 from django.db import IntegrityError, transaction
 from django.forms import (CheckboxSelectMultiple, ModelForm, SelectMultiple,
@@ -30,7 +28,7 @@ class RecipeForm(ModelForm):
         self.ingredients = {}
         super().__init__(*args, **kwargs)
 
-    def create_recipeingredients(self, recipe):
+    def create_recipe_ingredients(self, recipe):
         """
         Add ingredients to the new recipe.
         """
@@ -70,11 +68,10 @@ class RecipeForm(ModelForm):
                 if recipe.author_id is None:
                     recipe.author = user
                 slug = slugify(self.cleaned_data['title'])
-                if Recipe.objects.filter(slug=slug).exists():
-                    slug = uuid4()
                 recipe.slug = slug
                 recipe.save()
-                self.create_recipeingredients(recipe)
+                recipe.recipeingredients.all().delete()
+                self.create_recipe_ingredients(recipe)
                 self.save_m2m()
         except IntegrityError as save_error:
             raise BadRequest('Error while saving') from save_error
@@ -91,18 +88,6 @@ class RecipeForm(ModelForm):
                     self.ingredients[ingredient_name] = float(ingredient_value)
                 except ValueError:
                     self.ingredients[ingredient_name] = None
-
-    def delete_recipeingredients(self, recipe):
-        """
-        Delete ingredients from recipe.
-        """
-        existed_ingredients = recipe.recipeingredients.all()
-        for row in existed_ingredients:
-            if ((row.ingredient.title, row.quantity) not in
-                    self.ingredients.items()):
-                row.delete()
-            else:
-                del self.ingredients[row.ingredient.title]
 
     class Meta:
         model = Recipe

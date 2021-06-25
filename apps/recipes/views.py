@@ -36,7 +36,6 @@ class AuthorList(RecipeList):
     """
     List view for recipes by one author.
     """
-
     def get_queryset(self):
         queryset = super().get_queryset()
         author = get_object_or_404(User, username=self.kwargs['username'])
@@ -46,10 +45,11 @@ class AuthorList(RecipeList):
         context = super().get_context_data(**kwargs)
         author = get_object_or_404(User, username=self.kwargs['username'])
         context['author'] = author
-        following = (Follow.objects.filter(author=author,
-                                           user=self.request.user).exists()
-                     if self.request.user.is_authenticated
-                     else False)
+        if self.request.user.is_authenticated:
+            following = Follow.objects.filter(author=author,
+                                              user=self.request.user).exists()
+        else:
+            following = False
         context['following'] = following
         return context
 
@@ -66,10 +66,9 @@ class FavoritesList(LoginRequiredMixin, RecipeList):
     """
     ListView for favorites page.
     """
-
     def get_queryset(self):
         queryset = super().get_queryset()
-        all_favorites = self.request.user.favorites.all().values('recipe')
+        all_favorites = self.request.user.favorites.values('recipe')
         return queryset.filter(id__in=all_favorites)
 
     def get_context_data(self, **kwargs):
@@ -107,10 +106,14 @@ def add_or_edit_recipe(request, username=None, slug=None):
     Add or edit the recipe.
     """
     recipe = None
+    user = get_object_or_404(User, username=request.user.username)
     if username is not None and slug is not None:
         recipe = get_object_or_404(Recipe,
-                                   author__username=username,
+                                   author__username=user.username,
                                    slug=slug)
+        if (request.user != recipe.author and
+                request.user.is_superuser is False):
+            return redirect('index')
     recipe_form = RecipeForm(request.POST or None, request.FILES or None,
                              instance=recipe)
     if recipe_form.is_valid():
@@ -133,20 +136,9 @@ def delete_recipe(request, username, slug):
                                slug=slug)
     if request.user.is_superuser or request.user == recipe.author:
         recipe.delete()
+    else:
+        pass
     return redirect('index')
-
-
-@login_required
-def confirm_delete(request, username, slug):
-    """
-    Confirmation to delete the recipe.
-    """
-    return render(request,
-                  'recipes/recipe_delete.html',
-                  {
-                      'username': username,
-                      'slug': slug,
-                  })
 
 
 @login_required
@@ -170,4 +162,22 @@ def page_not_found(request, exception):
         'misc/404.html',
         {'path': request.path},
         status=404
+    )
+
+
+def server_error(request):
+    return render(
+        request,
+        'misc/500.html',
+        {'path': request.path},
+        status=500
+    )
+
+
+def bad_request(request, exception):
+    return render(
+        request,
+        'misc/400.html',
+        {'path': request.path},
+        status=400
     )
