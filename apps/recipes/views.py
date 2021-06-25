@@ -72,7 +72,7 @@ class FavoritesList(LoginRequiredMixin, RecipeList):
     """
     def get_queryset(self):
         queryset = super().get_queryset()
-        all_favorites = self.request.user.favorites.all().values('recipe')
+        all_favorites = self.request.user.favorites.values('recipe')
         return queryset.filter(id__in=all_favorites)
 
     def get_context_data(self, **kwargs):
@@ -160,12 +160,12 @@ def purchase_list_pdf(request):
 
 
 def page_not_found(request, exception):
-    return render(
-        request,
-        'misc/404.html',
-        {'path': request.path},
-        status=404
-    )
+        return render(
+            request,
+            'misc/404.html',
+            {'path': request.path},
+            status=404
+        )
 
 
 def server_error(request):

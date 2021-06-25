@@ -72,6 +72,7 @@ class RecipeForm(ModelForm):
                 slug = slugify(self.cleaned_data['title'])
                 recipe.slug = slug
                 recipe.save()
+                recipe.recipeingredients.all().delete()
                 self.create_recipe_ingredients(recipe)
                 self.save_m2m()
         except IntegrityError as save_error:
