@@ -4,9 +4,9 @@ from django.http import FileResponse
 from reportlab.pdfbase import pdfmetrics, ttfonts
 from reportlab.pdfgen import canvas
 
-from foodgram.settings import (PDF_TYPEFACE, PDF_HEAD_FONTSIZE, PDF_HEAD_X,
-                               PDF_HEAD_Y, PDF_HEAD_TEXT, PDF_BODY_FONTSIZE,
-                               STATIC_ROOT)
+from foodgram.settings import (PDF_BODY_FONTSIZE, PDF_HEAD_FONTSIZE,
+                               PDF_HEAD_TEXT, PDF_HEAD_X, PDF_HEAD_Y,
+                               PDF_TYPEFACE, STATIC_ROOT)
 
 
 def create_pdf(ingredients, filename):

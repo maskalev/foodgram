@@ -1,9 +1,6 @@
-import urllib
-
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
-from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
@@ -12,8 +9,7 @@ from apps.recipes.forms import RecipeForm, TagForm
 from apps.recipes.models import Follow, Purchase, Recipe, Tag
 from apps.recipes.utils import create_pdf
 from apps.users.models import User
-from foodgram.settings import PAGINATOR, LOGIN_URL
-from foodgram.urls import handler404
+from foodgram.settings import PAGINATOR
 
 
 class RecipeList(ListView):
@@ -113,9 +109,10 @@ def add_or_edit_recipe(request, username=None, slug=None):
     user = get_object_or_404(User, username=request.user.username)
     if username is not None and slug is not None:
         recipe = get_object_or_404(Recipe,
-                                   author__username=username,
+                                   author__username=user.username,
                                    slug=slug)
-        if request.user != recipe.author and request.user.is_superuser is False:
+        if (request.user != recipe.author and
+                request.user.is_superuser is False):
             return redirect('index')
     recipe_form = RecipeForm(request.POST or None, request.FILES or None,
                              instance=recipe)
@@ -160,12 +157,12 @@ def purchase_list_pdf(request):
 
 
 def page_not_found(request, exception):
-        return render(
-            request,
-            'misc/404.html',
-            {'path': request.path},
-            status=404
-        )
+    return render(
+        request,
+        'misc/404.html',
+        {'path': request.path},
+        status=404
+    )
 
 
 def server_error(request):
