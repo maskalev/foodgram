@@ -4,9 +4,18 @@ from django.http import FileResponse
 from reportlab.pdfbase import pdfmetrics, ttfonts
 from reportlab.pdfgen import canvas
 
-from foodgram.settings import (PDF_BODY_FONTSIZE, PDF_HEAD_FONTSIZE,
-                               PDF_HEAD_TEXT, PDF_HEAD_X, PDF_HEAD_Y,
-                               PDF_TYPEFACE, STATIC_ROOT)
+from foodgram.settings import STATIC_ROOT
+
+TYPEFACE = 'Arial'
+TYPEFACE_FILE = 'fonts/arial.ttf'
+HEAD_FONTSIZE = 40
+HEAD_X = 150
+HEAD_Y = 800
+HEAD_TEXT = 'Список покупок'
+BODY_FONTSIZE = 20
+BODY_X = 50
+BODY_Y = 750
+BODY_LINE_SPACING = 50
 
 
 def create_pdf(ingredients, filename):
@@ -14,22 +23,24 @@ def create_pdf(ingredients, filename):
     Create purchase list.
     """
     def print_head():
-        pdf_canvas.setFont(PDF_TYPEFACE, PDF_HEAD_FONTSIZE)
-        pdf_canvas.drawString(PDF_HEAD_X, PDF_HEAD_Y, PDF_HEAD_TEXT)
-        pdf_canvas.setFont(PDF_TYPEFACE, PDF_BODY_FONTSIZE)
+        pdf_canvas.setFont(TYPEFACE, HEAD_FONTSIZE)
+        pdf_canvas.drawString(HEAD_X, HEAD_Y, HEAD_TEXT)
+        pdf_canvas.setFont(TYPEFACE, BODY_FONTSIZE)
 
     buffer = io.BytesIO()
     pdf_canvas = canvas.Canvas(buffer)
-    font = ttfonts.TTFont(PDF_TYPEFACE, STATIC_ROOT / 'fonts/arial.ttf')
+    font = ttfonts.TTFont(TYPEFACE, STATIC_ROOT / TYPEFACE_FILE)
     pdfmetrics.registerFont(font)
     print_head()
     line_y = -1
-    for pos, val in enumerate(ingredients):
+    for pos, val in enumerate(ingredients, start=1):
         line_y += 1
-        string = (f'{pos + 1}. {val["recipe__ingredients__title"]} '
+        string = (f'{pos}. {val["recipe__ingredients__title"]} '
                   f'({val["recipe__ingredients__unit"]}): '
-                  f'{val["quantity"] or ""}')
-        pdf_canvas.drawString(50, 750 - 50 * line_y, string)
+                  f'{val["quantity"]}')
+        pdf_canvas.drawString(BODY_X,
+                              BODY_Y - BODY_LINE_SPACING * line_y,
+                              string)
         if (pos + 1) % 15 == 0:
             pdf_canvas.showPage()
             line_y = -1
