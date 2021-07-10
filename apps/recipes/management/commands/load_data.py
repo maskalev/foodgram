@@ -1,4 +1,5 @@
 import csv
+import logging
 
 from django.core.management.base import BaseCommand
 from django.db import IntegrityError
@@ -18,7 +19,6 @@ class Command(BaseCommand):
                     title, unit = row
                     Ingredient.objects.get_or_create(title=title, unit=unit)
         except IntegrityError:
-            print('Ingredients was not upload! Ingredients are not unique.')
+            logging.error(msg='Ingredients are not unique.')
         except ValueError:
-            print('Ingredients was not upload! '
-                  'One of ingredients have no unit.')
+            logging.error(msg='Ingredients was not upload!')
