@@ -103,12 +103,6 @@ class Recipe(models.Model):
     def __str__(self):
         return f'{self.title}, {self.author}, {self.pub_date}'
 
-    def get_ingredients(self):
-        """
-        Return recipe ingredients.
-        """
-        return RecipeIngredients.objects.filter(recipe=self.id)
-
     class Meta:
         ordering = ('-pub_date',)
         verbose_name = 'Recipe'
