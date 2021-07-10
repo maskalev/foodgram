@@ -130,10 +130,8 @@ class RecipeIngredients(models.Model):
         related_name='recipeingredients',
         verbose_name='Ingredient',
     )
-    quantity = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        validators=(MinValueValidator(0),),
+    quantity = models.PositiveSmallIntegerField(
+        validators=(MinValueValidator(1),),
         verbose_name='Quantity',
     )
 
