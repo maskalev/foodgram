@@ -80,6 +80,7 @@ class Recipe(models.Model):
         verbose_name='Image',
     )
     cooking_time = models.PositiveSmallIntegerField(
+        validators=(MinValueValidator(1),),
         verbose_name='Cooking time, min',
     )
     ingredients = models.ManyToManyField(
