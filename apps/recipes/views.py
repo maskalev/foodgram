@@ -136,8 +136,6 @@ def delete_recipe(request, username, slug):
                                slug=slug)
     if request.user.is_superuser or request.user == recipe.author:
         recipe.delete()
-    else:
-        pass
     return redirect('index')
 
 
