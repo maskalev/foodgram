@@ -21,7 +21,7 @@
         <h1 class="single-card__title">{{ recipe.title }}</h1>
         {% if user.is_authenticated %}
           <div class="single-card__favorite">
-            {% include 'recipes/includes/buttons/favorite_button_for_recipe_detail.html' %}
+            {% include "recipes/includes/buttons/favorite_button.html" with tooltip="yes" %}
           </div>
         {% endif %}
       </div>
