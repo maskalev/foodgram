@@ -58,7 +58,7 @@
       {% if user.is_authenticated %}
         <ul class="single-card__items">
           <li class="single-card__item">
-            {% include 'recipes/includes/buttons/purchase_button_for_recipe_detail.html' %}
+            {% include 'recipes/includes/buttons/purchase_button.html' with style="blue" %}
           </li>
           <li class="single-card__item">
             {% if recipe.author != user %}
