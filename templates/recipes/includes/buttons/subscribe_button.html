@@ -1,9 +1,12 @@
 {% load user_filters %}
-{% if author|isfollowing:user %}
-  <button class="button button_style_light-blue button_size_subscribe" name="subscribe">
-    Отписаться от автора
+{% if recipe_list == "yes" %}
+  {% if user.is_authenticated and author != user %}
+    <div class="author-subscribe" data-author="{{ author.id }}">
+      <p>
+        {% include "recipes/includes/buttons/to_subscribe_button.html" %}
+      </p>
+    </div>
+  {% endif %}
 {% else %}
-  <button class="button button_style_light-blue button_size_subscribe" name="subscribe" data-out>
-    Подписаться на автора
-  </button>
+  {% include "recipes/includes/buttons/to_subscribe_button.html" %}
 {% endif %}
