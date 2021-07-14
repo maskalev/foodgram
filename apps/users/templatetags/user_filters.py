@@ -67,11 +67,11 @@ def addclass(field, css):
 
 
 @register.filter
-def remainsrecipesnumber(numder):
+def remainsrecipesnumber(number):
     """
     Return correct end of the phrase.
     """
-    remains = numder % 10 - 3
+    remains = number % 10 - 3
     if remains == 1:
         return f'Ещё {remains} рецепт...'
     elif remains < 5:

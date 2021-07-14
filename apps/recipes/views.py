@@ -45,12 +45,6 @@ class AuthorList(RecipeList):
         context = super().get_context_data(**kwargs)
         author = get_object_or_404(User, username=self.kwargs['username'])
         context['author'] = author
-        if self.request.user.is_authenticated:
-            following = Follow.objects.filter(author=author,
-                                              user=self.request.user).exists()
-        else:
-            following = False
-        context['following'] = following
         return context
 
 
@@ -101,29 +95,39 @@ class PurchaseList(LoginRequiredMixin, ListView):
 
 
 @login_required
-def add_or_edit_recipe(request, username=None, slug=None):
+def add_recipe(request):
     """
-    Add or edit the recipe.
+    Add new recipe.
     """
-    recipe = None
-    user = get_object_or_404(User, username=request.user.username)
-    if username is not None and slug is not None:
-        recipe = get_object_or_404(Recipe,
-                                   author__username=user.username,
-                                   slug=slug)
-        if (request.user != recipe.author and
-                request.user.is_superuser is False):
-            return redirect('index')
-    recipe_form = RecipeForm(request.POST or None, request.FILES or None,
-                             instance=recipe)
+    recipe_form = RecipeForm(request.POST or None, files=request.FILES or None)
     if recipe_form.is_valid():
         recipe = recipe_form.save(user=request.user)
         return redirect(reverse('recipe', args=(recipe.author, recipe.slug)))
+    recipe_form = RecipeForm()
     return render(request, 'recipes/recipe_form.html',
                   {
                       'form': recipe_form,
-                      'recipe': recipe,
                   })
+
+
+@login_required
+def edit_recipe(request, username, slug=None):
+    recipe = get_object_or_404(Recipe, slug=slug, author__username=username)
+    if not request.user.is_superuser and request.user != recipe.author:
+        return redirect('index')
+    recipe_form = RecipeForm(
+        request.POST or None,
+        request.FILES or None,
+        instance=recipe
+    )
+    if not recipe_form.is_valid():
+        return render(request, 'recipes/recipe_form.html',
+                      {
+                          'form': recipe_form,
+                          'recipe': recipe,
+                      })
+    recipe_form.save()
+    return redirect(reverse('recipe', args=(recipe.author, recipe.slug)))
 
 
 @login_required
@@ -136,8 +140,6 @@ def delete_recipe(request, username, slug):
                                slug=slug)
     if request.user.is_superuser or request.user == recipe.author:
         recipe.delete()
-    else:
-        pass
     return redirect('index')
 
 

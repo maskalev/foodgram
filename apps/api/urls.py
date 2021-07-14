@@ -3,17 +3,16 @@ from rest_framework.routers import DefaultRouter
 
 from apps.api import views
 
-router = DefaultRouter()
+router_v1 = DefaultRouter()
 
-router.register('favorites', views.FavoritesView)
-router.register('purchases', views.PurchaseView)
-router.register('subscriptions', views.FollowView)
+router_v1.register('favorites', views.FavoritesView)
+router_v1.register('purchases', views.PurchaseView)
+router_v1.register('subscriptions', views.FollowView)
+router_v1.register('ingredients', views.IngredientsView)
+
 
 urlpatterns_api_v1 = [
-    path('', include(router.urls)),
-    path('ingredients/',
-         views.api_get_ingredients,
-         name='get_ingredients'),
+    path('', include(router_v1.urls)),
 ]
 
 urlpatterns = [

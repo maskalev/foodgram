@@ -139,11 +139,3 @@ PAGINATOR = 6
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 
 EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
-
-
-PDF_TYPEFACE = 'Arial'
-PDF_HEAD_FONTSIZE = 40
-PDF_HEAD_X = 150
-PDF_HEAD_Y = 800
-PDF_HEAD_TEXT = 'Список покупок'
-PDF_BODY_FONTSIZE = 20

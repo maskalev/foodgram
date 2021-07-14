@@ -1,8 +1,6 @@
-from django.http import JsonResponse
-from rest_framework import status, viewsets
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework import filters, mixins, status, viewsets
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from apps.api.serializers import (FavoriteSerializer, FollowSerializer,
@@ -66,12 +64,11 @@ class FollowView(CreateDestroyView):
     lookup_field = 'author'
 
 
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def api_get_ingredients(request):
-    query = request.GET.get('query')
-    if query is not None:
-        ingredients = Ingredient.objects.filter(title__istartswith=query)
-        serializer = IngredientSerializer(ingredients, many=True)
-        return JsonResponse(serializer.data, safe=False)
-    return Response({'error': 'query is empty'})
+class IngredientsView(mixins.ListModelMixin, viewsets.GenericViewSet):
+    """
+    Ingredients view.
+    """
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('^title',)

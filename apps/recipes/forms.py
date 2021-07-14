@@ -51,10 +51,6 @@ class RecipeForm(ModelForm):
         if not self.ingredients:
             error_message = ValidationError('Ingredients list is empty')
             self.add_error(None, error_message)
-        for value in self.ingredients.values():
-            if value <= 0:
-                error_message = ValidationError('Quantity must be positive')
-                self.add_error(None, error_message)
         return cleaned_data
 
     def save(self, *args, **kwargs):
@@ -84,10 +80,7 @@ class RecipeForm(ModelForm):
         for key, ingredient_name in self.data.items():
             if key.startswith('nameIngredient'):
                 ingredient_value = self.data['valueIngredient' + key[14:]]
-                try:
-                    self.ingredients[ingredient_name] = float(ingredient_value)
-                except ValueError:
-                    self.ingredients[ingredient_name] = None
+                self.ingredients[ingredient_name] = float(ingredient_value)
 
     class Meta:
         model = Recipe

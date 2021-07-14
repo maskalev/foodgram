@@ -80,6 +80,7 @@ class Recipe(models.Model):
         verbose_name='Image',
     )
     cooking_time = models.PositiveSmallIntegerField(
+        validators=(MinValueValidator(1),),
         verbose_name='Cooking time, min',
     )
     ingredients = models.ManyToManyField(
@@ -101,12 +102,6 @@ class Recipe(models.Model):
 
     def __str__(self):
         return f'{self.title}, {self.author}, {self.pub_date}'
-
-    def get_ingredients(self):
-        """
-        Return recipe ingredients.
-        """
-        return RecipeIngredients.objects.filter(recipe=self.id)
 
     class Meta:
         ordering = ('-pub_date',)
@@ -130,10 +125,8 @@ class RecipeIngredients(models.Model):
         related_name='recipeingredients',
         verbose_name='Ingredient',
     )
-    quantity = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        validators=(MinValueValidator(0),),
+    quantity = models.PositiveSmallIntegerField(
+        validators=(MinValueValidator(1),),
         verbose_name='Quantity',
     )
 
