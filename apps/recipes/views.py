@@ -45,12 +45,6 @@ class AuthorList(RecipeList):
         context = super().get_context_data(**kwargs)
         author = get_object_or_404(User, username=self.kwargs['username'])
         context['author'] = author
-        if self.request.user.is_authenticated:
-            following = Follow.objects.filter(author=author,
-                                              user=self.request.user).exists()
-        else:
-            following = False
-        context['following'] = following
         return context
 
 
