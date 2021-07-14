@@ -122,10 +122,10 @@ def edit_recipe(request, username, slug=None):
     )
     if not recipe_form.is_valid():
         return render(request, 'recipes/recipe_form.html',
-                          {
-                              'form': recipe_form,
-                              'recipe': recipe,
-                          })
+                      {
+                          'form': recipe_form,
+                          'recipe': recipe,
+                      })
     recipe_form.save()
     return redirect(reverse('recipe', args=(recipe.author, recipe.slug)))
 
