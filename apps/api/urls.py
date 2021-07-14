@@ -8,12 +8,11 @@ router_v1 = DefaultRouter()
 router_v1.register('favorites', views.FavoritesView)
 router_v1.register('purchases', views.PurchaseView)
 router_v1.register('subscriptions', views.FollowView)
+router_v1.register('ingredients', views.IngredientsView)
+
 
 urlpatterns_api_v1 = [
     path('', include(router_v1.urls)),
-    path('ingredients/',
-         views.api_get_ingredients,
-         name='get_ingredients'),
 ]
 
 urlpatterns = [
