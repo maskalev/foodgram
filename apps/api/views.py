@@ -65,6 +65,9 @@ class FollowView(CreateDestroyView):
 
 
 class IngredientsView(mixins.ListModelMixin, viewsets.GenericViewSet):
+    """
+    Ingredients view.
+    """
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     filter_backends = (filters.SearchFilter,)
