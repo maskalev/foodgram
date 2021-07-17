@@ -11,10 +11,6 @@ router_v1.register('subscriptions', views.FollowView)
 router_v1.register('ingredients', views.IngredientsView)
 
 
-urlpatterns_api_v1 = [
-    path('', include(router_v1.urls)),
-]
-
 urlpatterns = [
-    path('v1/', include(urlpatterns_api_v1)),
+    path('v1/', include(router_v1.urls)),
 ]
