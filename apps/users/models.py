@@ -21,9 +21,9 @@ class User(AbstractUser):
     )
     is_superuser = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.username
-
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
+
+    def __str__(self):
+        return self.username
