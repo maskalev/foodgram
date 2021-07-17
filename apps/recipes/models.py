@@ -106,7 +106,7 @@ class Recipe(models.Model):
         verbose_name_plural = 'Recipes'
 
     def __str__(self):
-        return f'{self.title}, {self.author}, {self.pub_date}'
+        return f'{self.title} by {self.author}'
 
 
 class RecipeIngredients(models.Model):
@@ -168,7 +168,7 @@ class Favorite(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.user}, {self.recipe}'
+        return f'{self.user} marked {self.recipe}'
 
 
 class Purchase(models.Model):
@@ -197,7 +197,7 @@ class Purchase(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.user}, {self.recipe}'
+        return f'{self.user} add to purchase {self.recipe}'
 
 
 class Follow(models.Model):
@@ -226,4 +226,4 @@ class Follow(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.author}, {self.user}'
+        return f'{self.user} follows to {self.author}'
