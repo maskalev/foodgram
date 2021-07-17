@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.core.exceptions import BadRequest, ValidationError
 from django.db import IntegrityError, transaction
 from django.forms import (CheckboxSelectMultiple, ModelForm, SelectMultiple,
@@ -64,6 +66,8 @@ class RecipeForm(ModelForm):
                 if recipe.author_id is None:
                     recipe.author = user
                 slug = slugify(self.cleaned_data['title'])
+                if Recipe.objects.filter(slug=slug).exists():
+                    slug = uuid4()
                 recipe.slug = slug
                 recipe.save()
                 recipe.recipeingredients.all().delete()
