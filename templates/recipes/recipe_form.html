@@ -24,6 +24,7 @@
     </h1>
   </div>
   {% load user_filters %}
+  {% load recipe_filters %}
   <div class="form-container">
     <form class="form" method="post" enctype="multipart/form-data" action="{% if recipe %}{% url 'edit_recipe' recipe.author.username recipe.slug %}{% else %}{% url 'add_recipe' %}{% endif %}">
       {% csrf_token %}
