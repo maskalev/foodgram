@@ -42,6 +42,8 @@
       <a href="{% url 'purchase_list_pdf' %}">
         <button class="button button_style_blue">Скачать список</button>
       </a>
+    {% else %}
+      <p class="custom-main-text">Список покупок пуст</p>
     {% endif %}
   </div>
 {% endblock %}
