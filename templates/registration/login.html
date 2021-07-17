@@ -17,7 +17,6 @@
       <p>Зарегистрируйтесь, чотбы продолжить</p>
     {% endif %}
   {% endif %}
-  {% load user_filters %}
   <div class="form-container">
     <form class="form" method="post" action="{% url 'login' %}">
       {% csrf_token %}

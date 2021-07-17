@@ -2,7 +2,7 @@
   <nav class="nav">
     <div class="nav__container container">
       <ul class="nav__items list">
-        {% load user_filters %}
+        {% load recipe_filters %}
         {% url "index" as index_url %}
         <li class="nav__item {% if index_url == request.path %}nav__item_active{% endif %}">
           <a href="{{ index_url }}" class="nav__link link">Рецепты</a>

@@ -21,7 +21,7 @@
           </div>
         </li>
       {% endfor %}
-      {% load user_filters %}
+      {% load recipe_filters %}
       {% if following.author.recipes.all.count > 3 %}
         <li class="card-user__item">
           <a href="{% url 'authorlist' following.author %}" class="card-user__link link">

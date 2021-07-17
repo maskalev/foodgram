@@ -1,4 +1,4 @@
-{% load user_filters %}
+{% load recipe_filters %}
 {% if recipe_list == "yes" %}
   {% if user.is_authenticated and author != user %}
     <div class="author-subscribe" data-author="{{ author.id }}">

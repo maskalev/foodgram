@@ -37,7 +37,7 @@
         </li>
       {% endfor %}
     </ul>
-    {% load user_filters %}
+    {% load recipe_filters %}
     {% if user|shopcounter > 0 %}
       <a href="{% url 'purchase_list_pdf' %}">
         <button class="button button_style_blue">Скачать список</button>
