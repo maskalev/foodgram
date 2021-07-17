@@ -18,6 +18,7 @@ class Command(BaseCommand):
                 for row in file_reader:
                     title, unit = row
                     Ingredient.objects.get_or_create(title=title, unit=unit)
+            logging.info(msg='Ingredients was upload successfully!')
         except IntegrityError:
             logging.error(msg='Ingredients are not unique.')
         except ValueError:

@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.core.exceptions import BadRequest, ValidationError
 from django.db import IntegrityError, transaction
 from django.forms import (CheckboxSelectMultiple, ModelForm, SelectMultiple,
@@ -32,15 +34,13 @@ class RecipeForm(ModelForm):
         """
         Add ingredients to the new recipe.
         """
-        ingredients_to_create = []
         for ingredient_title, quantity in self.ingredients.items():
             ingredient = get_object_or_404(Ingredient,
                                            title=ingredient_title)
             recipeingredients = RecipeIngredients(recipe=recipe,
                                                   ingredient=ingredient,
                                                   quantity=quantity)
-            ingredients_to_create.append(recipeingredients)
-        RecipeIngredients.objects.bulk_create(ingredients_to_create)
+            recipeingredients.save()
 
     def clean(self):
         """
@@ -64,6 +64,8 @@ class RecipeForm(ModelForm):
                 if recipe.author_id is None:
                     recipe.author = user
                 slug = slugify(self.cleaned_data['title'])
+                if Recipe.objects.filter(slug=slug).exists():
+                    slug = uuid4()
                 recipe.slug = slug
                 recipe.save()
                 recipe.recipeingredients.all().delete()

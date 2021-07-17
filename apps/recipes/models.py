@@ -18,12 +18,12 @@ class Ingredient(models.Model):
         verbose_name='Unit of measurement'
     )
 
-    def __str__(self):
-        return f'{self.title} ({self.unit})'
-
     class Meta:
         verbose_name = 'Ingredient'
         verbose_name_plural = 'Ingredients'
+
+    def __str__(self):
+        return f'{self.title} ({self.unit})'
 
 
 class Tag(models.Model):
@@ -45,12 +45,12 @@ class Tag(models.Model):
         verbose_name='Tag color'
     )
 
-    def __str__(self):
-        return f'{self.title}'
-
     class Meta:
         verbose_name = 'Tag'
         verbose_name_plural = 'Tags'
+
+    def __str__(self):
+        return f'{self.title}'
 
 
 class Recipe(models.Model):
@@ -100,13 +100,13 @@ class Recipe(models.Model):
         verbose_name='Recipe slug',
     )
 
-    def __str__(self):
-        return f'{self.title}, {self.author}, {self.pub_date}'
-
     class Meta:
         ordering = ('-pub_date',)
         verbose_name = 'Recipe'
         verbose_name_plural = 'Recipes'
+
+    def __str__(self):
+        return f'{self.title} by {self.author}'
 
 
 class RecipeIngredients(models.Model):
@@ -130,9 +130,6 @@ class RecipeIngredients(models.Model):
         verbose_name='Quantity',
     )
 
-    def __str__(self):
-        return f'{self.recipe}, {self.ingredient}, {self.quantity}'
-
     class Meta:
         verbose_name_plural = 'RecipesIngredients'
         verbose_name = 'RecipeIngredients'
@@ -140,6 +137,9 @@ class RecipeIngredients(models.Model):
             models.UniqueConstraint(fields=('recipe', 'ingredient'),
                                     name='unique_link'),
         ]
+
+    def __str__(self):
+        return f'{self.recipe}, {self.ingredient}, {self.quantity}'
 
 
 class Favorite(models.Model):
@@ -159,9 +159,6 @@ class Favorite(models.Model):
         verbose_name='Recipe',
     )
 
-    def __str__(self):
-        return f'{self.user}, {self.recipe}'
-
     class Meta:
         verbose_name_plural = 'Favorite'
         verbose_name = 'Favorites'
@@ -169,6 +166,9 @@ class Favorite(models.Model):
             models.UniqueConstraint(fields=('user', 'recipe'),
                                     name='unique_favorites_link'),
         ]
+
+    def __str__(self):
+        return f'{self.user} marked {self.recipe}'
 
 
 class Purchase(models.Model):
@@ -188,9 +188,6 @@ class Purchase(models.Model):
         verbose_name='Recipe',
     )
 
-    def __str__(self):
-        return f'{self.user}, {self.recipe}'
-
     class Meta:
         verbose_name = 'Purchase'
         verbose_name_plural = 'Purchases'
@@ -198,6 +195,9 @@ class Purchase(models.Model):
             models.UniqueConstraint(fields=('user', 'recipe'),
                                     name='unique_purchase_link'),
         ]
+
+    def __str__(self):
+        return f'{self.user} add to purchase {self.recipe}'
 
 
 class Follow(models.Model):
@@ -217,9 +217,6 @@ class Follow(models.Model):
         verbose_name='Follower',
     )
 
-    def __str__(self):
-        return f'{self.author}, {self.user}'
-
     class Meta:
         verbose_name = 'Follower'
         verbose_name_plural = 'Followers'
@@ -227,3 +224,6 @@ class Follow(models.Model):
             models.UniqueConstraint(fields=('author', 'user'),
                                     name='unique_follow_link'),
         ]
+
+    def __str__(self):
+        return f'{self.user} follows to {self.author}'
