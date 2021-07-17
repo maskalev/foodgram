@@ -61,12 +61,14 @@ def intmap(value):
 @register.filter
 def remainsrecipesnumber(number):
     """
-    Return correct end of the phrase.
+    Return correct phrase.
     """
-    remains = number % 10 - 3
-    if remains == 1:
-        return f'Ещё {remains} рецепт...'
-    elif remains < 5:
-        return f'Ещё {remains} рецепта...'
+    remains = number % 10
+    if 7 < number < 24:
+        return f'Ещё {number - 3} рецептов...'
+    elif remains == 4:
+        return f'Ещё {number - 3} рецепт...'
+    elif 4 < remains < 8:
+        return f'Ещё {number - 3} рецепта...'
     else:
-        return f'Ещё {remains} рецептов...'
+        return f'Ещё {number - 3} рецептов...'
