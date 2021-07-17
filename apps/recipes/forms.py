@@ -34,15 +34,13 @@ class RecipeForm(ModelForm):
         """
         Add ingredients to the new recipe.
         """
-        ingredients_to_create = []
         for ingredient_title, quantity in self.ingredients.items():
             ingredient = get_object_or_404(Ingredient,
                                            title=ingredient_title)
             recipeingredients = RecipeIngredients(recipe=recipe,
                                                   ingredient=ingredient,
                                                   quantity=quantity)
-            ingredients_to_create.append(recipeingredients)
-        RecipeIngredients.objects.bulk_create(ingredients_to_create)
+            recipeingredients.save()
 
     def clean(self):
         """
