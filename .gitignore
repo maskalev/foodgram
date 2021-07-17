@@ -143,4 +143,4 @@ htmlcov/
 coverage.xml
 *.cover
 
-
+.idea
