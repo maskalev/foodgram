@@ -226,4 +226,4 @@ class Follow(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.user} follows to {self.author}'
+        return f'{self.user} follows {self.author}'
