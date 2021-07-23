@@ -83,7 +83,7 @@ class RecipeViewTest(TestCase):
             'image': forms.fields.ImageField,
             'cooking_time': forms.fields.IntegerField,
             'slug': forms.fields.SlugField,
-            }
+        }
         for value, expected in new_context.items():
             with self.subTest(value=value):
                 form_field = response.context['form'].fields.get(value)
@@ -145,7 +145,7 @@ class RecipeViewTest(TestCase):
         """
         pages = {
             reverse('index'): 6,
-            (reverse('index')+'?page=2'): 2,
+            (reverse('index') + '?page=2'): 2,
         }
         for page, obj_count in pages.items():
             with self.subTest(page=page):
