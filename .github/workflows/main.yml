@@ -26,5 +26,3 @@ jobs:
       run: |
         # запуск проверки проекта по flake8
         python -m flake8
-        # автоматические тесты
-        python manage.py test
