@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -8,7 +7,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = 'django-insecure-sv3v8^h&dq!x77r*5=@o&=_jkjrtji+wjkh_9#x#ls%a=z#b%_'
 
 
 DEBUG = False
@@ -132,9 +131,7 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-
 PAGINATOR = 6
-
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 

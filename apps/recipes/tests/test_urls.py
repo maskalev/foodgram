@@ -129,30 +129,30 @@ class RecipeURLTest(TestCase):
         Test redirect anonymous user to the correct page
         """
         redirect_pages = {
-            reverse('subscriptions'): (reverse('login') + '?next=' +
-                                       reverse('subscriptions')),
-            reverse('favorites'): (reverse('login') + '?next=' +
-                                   reverse('favorites')),
-            reverse('purchases'): (reverse('login') + '?next=' +
-                                   reverse('purchases')),
-            reverse('add_recipe'): (reverse('login') + '?next=' +
-                                    reverse('add_recipe')),
+            reverse('subscriptions'): (reverse('login') + '?next='
+                                       + reverse('subscriptions')),
+            reverse('favorites'): (reverse('login') + '?next='
+                                   + reverse('favorites')),
+            reverse('purchases'): (reverse('login') + '?next='
+                                   + reverse('purchases')),
+            reverse('add_recipe'): (reverse('login') + '?next='
+                                    + reverse('add_recipe')),
             reverse('edit_recipe', kwargs={
                 'username': RecipeURLTest.recipe.author.username,
                 'slug': RecipeURLTest.recipe.slug
-            }): (reverse('login') + '?next=' +
-                 reverse('edit_recipe', kwargs={
-                     'username': RecipeURLTest.recipe.author.username,
-                     'slug': RecipeURLTest.recipe.slug
-                 })),
+            }): (reverse('login') + '?next='
+                 + reverse('edit_recipe', kwargs={
+                        'username': RecipeURLTest.recipe.author.username,
+                        'slug': RecipeURLTest.recipe.slug
+                    })),
             reverse('delete_recipe', kwargs={
                 'username': RecipeURLTest.recipe.author.username,
                 'slug': RecipeURLTest.recipe.slug
-            }): (reverse('login') + '?next=' +
-                 reverse('delete_recipe', kwargs={
-                     'username': RecipeURLTest.recipe.author.username,
-                     'slug': RecipeURLTest.recipe.slug
-                 })),
+            }): (reverse('login') + '?next='
+                 + reverse('delete_recipe', kwargs={
+                        'username': RecipeURLTest.recipe.author.username,
+                        'slug': RecipeURLTest.recipe.slug
+                    })),
         }
         for donor, expected in redirect_pages.items():
             with self.subTest(donor=donor):
