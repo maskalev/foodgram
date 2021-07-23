@@ -24,14 +24,6 @@ class RecipeViewTest(TestCase):
         cls.recipe = Recipe.objects.get(id=1)
         cls.purchase = Purchase.objects.get(id=1)
 
-    def test_error_page_use_correct_template(self):
-        """
-        Error pages use the correct templates.
-        """
-        templates_url_names = {
-
-        }
-
     def test_index_page_show_correct_context(self):
         """
         Index page shows the correct context.
@@ -171,9 +163,9 @@ class RecipeViewTest(TestCase):
                         'username': RecipeViewTest.author.username,
                     }): 6,
             reverse('authorlist',
-                     kwargs={
-                         'username': RecipeViewTest.author.username,
-                    })+'?page=2': 1,
+                    kwargs={
+                        'username': RecipeViewTest.author.username,
+                     })+'?page=2': 1,
         }
         for page, obj_count in pages.items():
             with self.subTest(page=page):

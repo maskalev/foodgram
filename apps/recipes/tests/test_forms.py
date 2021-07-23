@@ -39,7 +39,7 @@ class RecipeFormTest(TestCase):
         Delete recipe from database.
         """
         self.assertEqual(Recipe.objects.count(), 8)
-        response = RecipeFormTest.recipe_author.get(
+        RecipeFormTest.recipe_author.get(
             reverse('delete_recipe',
                     kwargs={
                         'username': RecipeFormTest.author.username,

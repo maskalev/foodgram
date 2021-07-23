@@ -1,6 +1,6 @@
+from django.test import Client
 from django.urls import include, path, reverse
 from rest_framework.test import APITestCase, URLPatternsTestCase
-from django.test import Client
 
 from apps.users.models import User
 
