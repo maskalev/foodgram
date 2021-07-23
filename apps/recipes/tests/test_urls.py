@@ -129,8 +129,8 @@ class RecipeURLTest(TestCase):
         Test redirect anonymous user to the correct page
         """
         redirect_pages = {
-            reverse('subscriptions'): (reverse('login') + '?next=' +
-                                       reverse('subscriptions')),
+            reverse('subscriptions'): (reverse('login') + '?next='
+                                       + reverse('subscriptions')),
             reverse('favorites'): (reverse('login') + '?next=' +
                                    reverse('favorites')),
             reverse('purchases'): (reverse('login') + '?next=' +
