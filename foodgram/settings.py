@@ -132,9 +132,7 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-
 PAGINATOR = 6
-
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 
