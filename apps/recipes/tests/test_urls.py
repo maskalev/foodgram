@@ -141,7 +141,7 @@ class RecipeURLTest(TestCase):
                 'username': RecipeURLTest.recipe.author.username,
                 'slug': RecipeURLTest.recipe.slug
             }): (reverse('login') + '?next='
-                 + reverse('edit_recipe',kwargs={
+                 + reverse('edit_recipe', kwargs={
                         'username': RecipeURLTest.recipe.author.username,
                         'slug': RecipeURLTest.recipe.slug
                     })),
