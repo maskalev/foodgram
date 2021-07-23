@@ -165,7 +165,7 @@ class RecipeViewTest(TestCase):
             reverse('authorlist',
                     kwargs={
                         'username': RecipeViewTest.author.username,
-                     })+'?page=2': 1,
+                    }) + '?page=2': 1,
         }
         for page, obj_count in pages.items():
             with self.subTest(page=page):
