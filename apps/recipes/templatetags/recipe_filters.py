@@ -64,11 +64,12 @@ def remainsrecipesnumber(number):
     Return correct phrase.
     """
     remains = number % 10
+    still_numbers = number - 3
     if 7 < number < 24:
-        return f'Ещё {number - 3} рецептов...'
+        return f'Ещё {still_numbers} рецептов...'
     elif remains == 4:
-        return f'Ещё {number - 3} рецепт...'
+        return f'Ещё {still_numbers} рецепт...'
     elif 4 < remains < 8:
-        return f'Ещё {number - 3} рецепта...'
+        return f'Ещё {still_numbers} рецепта...'
     else:
-        return f'Ещё {number - 3} рецептов...'
+        return f'Ещё {still_numbers} рецептов...'
