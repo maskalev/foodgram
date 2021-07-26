@@ -17,9 +17,6 @@ jobs:
     - name: Test with flake8
       run:
         python -m flake8
-    - name: Automatic tests
-      run:
-        python manage.py test
   build_and_push_to_docker_hub:
     name: push docker image to docker hub
     runs-on: ubuntu-latest
@@ -39,9 +36,40 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/foodgram
-  send_message:
+  deploy:
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: executing remote ssh commands to deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+#          passphrase: ${{ secrets.PASSPHRASE }}
+          stack_file_name: docker-compose.yaml
+          script: |
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/foodgram
+            sudo docker-compose stop
+            sudo docker-compose rm web
+            touch .env
+            echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
+            echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+            echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
+            echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
+            echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+            echo DB_PORT=${{ secrets.DB_PORT }} >> .env
+            sudo docker-compose up -d
+            sudo docker-compose exec -T web python3 manage.py makemigrations users --no-input
+            sudo docker-compose exec -T web python3 manage.py makemigrations api --no-input
+            sudo docker-compose exec -T web python3 manage.py migrate --no-input
+            sudo docker-compose exec -T web python3 manage.py collectstatic --no-input
+            sudo docker-compose restart
+            sudo docker-compose exec -T web python manage.py loaddata -e=auth -e=contenttypes fixtures.json
+  send_message:
+    runs-on: ubuntu-latest
+    needs: deploy
     steps:
       - name: send message
         uses: appleboy/telegram-action@master
@@ -50,34 +78,3 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: ${{ github.workflow }} успешно выполнен!!!
 
-#  deploy:
-#    runs-on: ubuntu-latest
-#    needs: build_and_push_to_docker_hub
-#    if: github.ref == 'refs/heads/master'
-#    steps:
-#      - name: executing remote ssh commands to deploy
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.HOST }}
-#          username: ${{ secrets.USER }}
-#          key: ${{ secrets.SSH_KEY }}
-#          passphrase: ${{ secrets.PASSPHRASE }}
-#          stack_file_name: docker-compose.yaml
-#          script: |
-#            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/yamdb_final
-#            sudo docker-compose stop
-#            sudo docker-compose rm web
-#            touch .env
-#            echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
-#            echo DB_NAME=${{ secrets.DB_NAME }} >> .env
-#            echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
-#            echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
-#            echo DB_HOST=${{ secrets.DB_HOST }} >> .env
-#            echo DB_PORT=${{ secrets.DB_PORT }} >> .env
-#            sudo docker-compose up -d
-#            sudo docker-compose exec -T web python3 manage.py makemigrations users --no-input
-#            sudo docker-compose exec -T web python3 manage.py makemigrations api --no-input
-#            sudo docker-compose exec -T web python3 manage.py migrate --no-input
-#            sudo docker-compose exec -T web python3 manage.py collectstatic --no-input
-#            sudo docker-compose restart
-#            sudo docker-compose exec -T web python manage.py loaddata -e=auth -e=contenttypes fixtures.json
