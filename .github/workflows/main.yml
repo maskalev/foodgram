@@ -19,7 +19,7 @@ jobs:
         python -m flake8
     - name: Automatic tests
       run:
-        python manage.py tests
+        python manage.py test
   build_and_push_to_docker_hub:
     name: push docker image to docker hub
     runs-on: ubuntu-latest
