@@ -5,7 +5,6 @@ import sentry_sdk
 from dotenv import load_dotenv
 from sentry_sdk.integrations.django import DjangoIntegration
 
-
 sentry_sdk.init(
     dsn="https://6644cd6105314f069a82b6b9b629d92e@o578629.ingest.sentry.io/5881725",
     integrations=[DjangoIntegration()],
