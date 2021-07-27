@@ -48,9 +48,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           stack_file_name: docker-compose.yaml
-          target: '/home/${{ secrets.USER }}/foodgram'
           script: |
-            cd foodgram
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/foodgram
             sudo docker-compose stop
             sudo docker-compose rm web
