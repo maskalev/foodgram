@@ -9,7 +9,13 @@ handler400 = 'apps.recipes.views.bad_request' # noqa
 handler404 = 'apps.recipes.views.page_not_found' # noqa
 handler500 = 'apps.recipes.views.server_error' # noqa
 
+
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
+
 urlpatterns = [
+    path('sentry-debug/', trigger_error),
     path('admin/', admin.site.urls),
     path('auth/', include('apps.users.urls')),
     path('auth/', include('django.contrib.auth.urls')),
