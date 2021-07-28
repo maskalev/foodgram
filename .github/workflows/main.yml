@@ -24,7 +24,8 @@ jobs:
       run:
         python -m flake8
     - name: Automatic tests
-      run:
+      run: |
+        CREATE DATABASE postgres
         python manage.py test
 #  build_and_push_to_docker_hub:
 #    name: push docker image to docker hub
