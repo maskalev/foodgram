@@ -124,9 +124,9 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'assets',
-# ]
+STATICFILES_DIRS = [
+    BASE_DIR / 'assets',
+]
 STATIC_ROOT = BASE_DIR / 'static'
 
 
