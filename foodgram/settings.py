@@ -1,5 +1,5 @@
 import os
-# from pathlib import Path
+from pathlib import Path
 
 import sentry_sdk
 from dotenv import load_dotenv
@@ -15,8 +15,7 @@ sentry_sdk.init(
 
 load_dotenv()
 
-# BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-sv3v8^h&dq!x77r*5=@o&=_jkjrtji+wjkh_9#x#ls%a=z#b%_'
 
@@ -62,8 +61,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            # BASE_DIR / 'templates',
-            os.path.join(BASE_DIR, 'templates')
+            BASE_DIR / 'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -126,16 +124,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    # BASE_DIR / 'assets',
-    os.path.join(BASE_DIR, 'assets')
+    BASE_DIR / 'assets',
 ]
-# STATIC_ROOT = BASE_DIR / 'static'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = BASE_DIR / 'static'
 
 
 MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -153,5 +148,4 @@ PAGINATOR = 6
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 
-# EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
