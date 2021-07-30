@@ -64,7 +64,6 @@ jobs:
             sudo docker-compose exec -T web python3 manage.py makemigrations users --no-input
             sudo docker-compose exec -T web python3 manage.py makemigrations recipes --no-input
             sudo docker-compose exec -T web python3 manage.py migrate --no-input
-            sudo docker-compose exec -T web python3 manage.py collectstatic --no-input
             sudo docker-compose restart
             sudo docker-compose exec -T web python manage.py loaddata -e=auth -e=contenttypes fixtures.json
   send_push_develop_message:
