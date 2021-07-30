@@ -15,8 +15,8 @@ sentry_sdk.init(
 
 load_dotenv()
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'django-insecure-sv3v8^h&dq!x77r*5=@o&=_jkjrtji+wjkh_9#x#ls%a=z#b%_'
 
@@ -127,7 +127,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'assets',
 ]
-STATIC_ROOT = BASE_DIR / 'static'
+# STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 
 MEDIA_URL = '/media/'
