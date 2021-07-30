@@ -126,7 +126,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'assets',
+    # BASE_DIR / 'assets',
+    os.path.join(BASE_DIR, 'assets')
 ]
 # STATIC_ROOT = BASE_DIR / 'static'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -152,4 +153,5 @@ PAGINATOR = 6
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 
-EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+# EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
