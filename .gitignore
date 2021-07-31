@@ -144,5 +144,3 @@ coverage.xml
 *.cover
 
 .idea
-
-tests/
