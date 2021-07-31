@@ -70,7 +70,6 @@ class RecipeURLTest(TestCase):
             reverse('subscriptions'): 200,
             reverse('favorites'): 200,
             reverse('purchases'): 200,
-            # reverse('purchase_list_pdf'): 200,
             reverse('add_recipe'): 200,
             reverse('edit_recipe', kwargs={
                 'username': RecipeURLTest.recipe.author.username,
