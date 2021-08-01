@@ -1,4 +1,4 @@
-name: foodgram workflow
+name: foodgram workflow (push to develop)
 on: push
 jobs:
   tests:
@@ -23,10 +23,24 @@ jobs:
         echo DB_ENGINE=${{ secrets.TEST_DB_ENGINE }} >> .env
         echo DB_NAME=${{ secrets.TEST_DB_NAME }} >> .env
         pytest
+  send_push_develop_message:
+    runs-on: ubuntu-latest
+    needs: tests
+    if: github.ref == 'refs/heads/develop'
+    steps:
+      - name: send message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: ${{ github.workflow }} успешно выполнен!!!
+
+name: foodgram workflow (merge to master)
+on: push
+jobs:
   build_and_push_to_docker_hub:
     name: push docker image to docker hub
     runs-on: ubuntu-latest
-    needs: tests
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Check out the repo
@@ -73,18 +87,7 @@ jobs:
             sudo docker-compose exec -T web python3 manage.py collectstatic --no-input
             sudo docker-compose restart
             sudo docker-compose exec -T web python manage.py loaddata -e=auth -e=contenttypes fixtures.json
-  send_push_develop_message:
-    runs-on: ubuntu-latest
-    needs: tests
-    if: github.ref == 'refs/heads/develop'
-    steps:
-      - name: send message
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: ${{ github.workflow }} успешно выполнен (push to develop branch) !!!
-  send_pull_request_master_message:
+  send_merge_master_message:
     runs-on: ubuntu-latest
     needs: deploy
     steps:
@@ -93,4 +96,4 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: ${{ github.workflow }} успешно выполнен (pull request to master branch) !!!
+          message: ${{ github.workflow }} успешно выполнен!!!
