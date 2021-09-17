@@ -3,7 +3,7 @@
     "model": "recipes.ingredient",
     "pk": 1,
     "fields": {
-        "title": "ingredient1",
+        "name": "ingredient1",
         "unit": "unit1"
     }
 },
@@ -11,7 +11,7 @@
     "model": "recipes.ingredient",
     "pk": 2,
     "fields": {
-        "title": "ingredient2",
+        "name": "ingredient2",
         "unit": "unit2"
     }
 },
@@ -19,7 +19,7 @@
     "model": "recipes.ingredient",
     "pk": 3,
     "fields": {
-        "title": "ingredient3",
+        "name": "ingredient3",
         "unit": "unit3"
     }
 },

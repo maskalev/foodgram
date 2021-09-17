@@ -52,14 +52,14 @@ class TagAdmin(admin.ModelAdmin):
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
     list_display = (
-        'title',
+        'name',
         'unit',
     )
     search_fields = (
-        'title',
+        'name',
     )
     list_filter = (
-        'title',
+        'name',
     )
 
 

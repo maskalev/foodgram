@@ -24,7 +24,7 @@ class RecipeModelTest(TestCase):
         """
         ingredient = RecipeModelTest.ingredient
         field_verbose = {
-            'title': 'Ingredient title',
+            'name': 'Ingredient title',
             'unit': 'Unit of measurement',
         }
         for value, expected in field_verbose.items():
@@ -123,7 +123,7 @@ class RecipeModelTest(TestCase):
         Name of Ingredient object are expected.
         """
         ingredient = RecipeModelTest.ingredient
-        expected_object_name = f'{ingredient.title} ({ingredient.unit})'
+        expected_object_name = f'{ingredient.name} ({ingredient.unit})'
         assert expected_object_name == str(ingredient)
 
     def test_tag_name(self):

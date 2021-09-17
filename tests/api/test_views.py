@@ -30,7 +30,7 @@ class ApiURLTest(APITestCase, URLPatternsTestCase):
             reverse('follow-list'): OrderedDict([('id', 1), ('author', 2)]),
             reverse('ingredient-list'): OrderedDict([
                 ('id', 1),
-                ('title', 'ingredient1'),
+                ('name', 'ingredient1'),
                 ('unit', 'unit1')]),
         }
         for name, data in pages_data.items():
