@@ -30,6 +30,9 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'apps.users',
+    'apps.recipes',
+    'apps.api',
+    'apps.about',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,10 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sorl.thumbnail',
     'rest_framework',
-    'apps.recipes',
-    'apps.api',
-    'apps.about',
     'debug_toolbar',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -78,16 +79,25 @@ TEMPLATES = [
 WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': os.getenv('DB_ENGINE'),
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('TEST_DB_ENGINE'),
+            'NAME': os.getenv('TEST_DB_NAME'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('DB_ENGINE'),
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('POSTGRES_USER'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
+        }
+    }
+
 
 AUTH_USER_MODEL = 'users.User'
 

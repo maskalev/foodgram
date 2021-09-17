@@ -36,7 +36,7 @@ class RecipeForm(ModelForm):
         """
         for ingredient_title, quantity in self.ingredients.items():
             ingredient = get_object_or_404(Ingredient,
-                                           title=ingredient_title)
+                                           name=ingredient_title)
             recipeingredients = RecipeIngredients(recipe=recipe,
                                                   ingredient=ingredient,
                                                   quantity=quantity)

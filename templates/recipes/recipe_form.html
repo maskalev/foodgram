@@ -75,7 +75,7 @@
             {% for item in recipe.recipeingredients.all %}
               {% with forloop.counter as counter %}
                 <div class="form__field-item-ingredient" id="ing_{{ counter }}">
-                  <span> {{ item.ingredient.title }} -
+                  <span> {{ item.ingredient.name }} -
                          {{ item.quantity|floatformat }}
                          {{ item.ingredient.unit }}
                   </span>

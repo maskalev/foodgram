@@ -8,7 +8,7 @@ class Ingredient(models.Model):
     """
     Ingredient model.
     """
-    title = models.CharField(
+    name = models.CharField(
         max_length=255,
         verbose_name='Ingredient title',
         unique=True
@@ -23,7 +23,7 @@ class Ingredient(models.Model):
         verbose_name_plural = 'Ingredients'
 
     def __str__(self):
-        return f'{self.title} ({self.unit})'
+        return f'{self.name} ({self.unit})'
 
 
 class Tag(models.Model):
