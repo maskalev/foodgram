@@ -151,9 +151,9 @@ def purchase_list_pdf(request):
     ingredients = request.user.purchases.select_related(
         'recipe'
     ).order_by(
-        'recipe__ingredients__title'
+        'recipe__ingredients__name'
     ).values(
-        'recipe__ingredients__title', 'recipe__ingredients__unit'
+        'recipe__ingredients__name', 'recipe__ingredients__unit'
     ).annotate(quantity=Sum('recipe__recipeingredients__quantity')).all()
     return create_pdf(ingredients, 'purchase_list.pdf')
 

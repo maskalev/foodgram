@@ -35,7 +35,7 @@ def create_pdf(ingredients, filename):
     line_y = -1
     for pos, val in enumerate(ingredients, start=1):
         line_y += 1
-        string = (f'{pos}. {val["recipe__ingredients__title"]} '
+        string = (f'{pos}. {val["recipe__ingredients__name"]} '
                   f'({val["recipe__ingredients__unit"]}): '
                   f'{val["quantity"]}')
         pdf_canvas.drawString(BODY_X,
