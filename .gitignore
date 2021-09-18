@@ -136,10 +136,4 @@ TODO.py
 
 sent_emails/
 
-htmlcov/
-.coverage
-.coverage.*
-coverage.xml
-*.cover
-
 .idea

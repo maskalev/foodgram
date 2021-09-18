@@ -29,7 +29,8 @@ class RecipeModelTest(TestCase):
         }
         for value, expected in field_verbose.items():
             with self.subTest(value=value):
-                assert ingredient._meta.get_field(value).verbose_name == expected
+                assert (ingredient._meta.get_field(value).verbose_name ==
+                        expected)
 
     def test_tag_verbose_name(self):
         """
@@ -77,7 +78,8 @@ class RecipeModelTest(TestCase):
         }
         for value, expected in field_verbose.items():
             with self.subTest(value=value):
-                assert recipeingredients._meta.get_field(value).verbose_name == expected
+                assert (recipeingredients._meta.get_field(value).verbose_name
+                        == expected)
 
     def test_favorite_verbose_name(self):
         """
