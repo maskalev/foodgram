@@ -7,16 +7,16 @@ class User(AbstractUser):
     Custom user model.
     """
     name = models.CharField(
-        verbose_name='Name',
+        verbose_name='Имя',
         max_length=256,
     )
     username = models.CharField(
-        verbose_name='Login',
+        verbose_name='Имя пользователя',
         max_length=64,
         unique=True,
     )
     email = models.EmailField(
-        verbose_name='Email',
+        verbose_name='Адрес электронной почты',
         unique=True
     )
     is_superuser = models.BooleanField(default=False)
