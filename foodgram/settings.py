@@ -156,10 +156,10 @@ INTERNAL_IPS = [
 
 PAGINATOR = 6
 
-# EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
 # EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 # EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'avmaskalev@gmail.com'
 EMAIL_HOST_PASSWORD = 'weizvyaeutrtoqtd'
 
