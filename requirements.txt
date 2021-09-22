@@ -2,7 +2,7 @@ asgiref==3.3.4
 attrs==21.2.0
 certifi==2021.5.30
 coverage==5.5
-Django==3.2.4
+Django==3.2.5
 django-debug-toolbar==3.2.1
 django-filter==2.4.0
 djangorestframework==3.12.4
