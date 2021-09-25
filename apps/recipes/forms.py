@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from django.core.exceptions import BadRequest, ValidationError
+from django.core.exceptions import BadRequest
 from django.db import IntegrityError, transaction
 from django.forms import (CheckboxSelectMultiple, ModelForm, SelectMultiple,
                           Textarea)
