@@ -6,8 +6,7 @@ from django.urls import reverse
 from django.views.generic import DetailView, ListView
 
 from apps.recipes.forms import RecipeForm, TagForm
-from apps.recipes.models import Follow, Purchase, Recipe, Tag, \
-    RecipeIngredients
+from apps.recipes.models import Follow, Purchase, Recipe, Tag
 from apps.recipes.utils import create_pdf
 from apps.users.models import User
 from foodgram.settings import PAGINATOR
