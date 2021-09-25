@@ -30,18 +30,6 @@ class RecipeForm(ModelForm):
         self.ingredients = {}
         super().__init__(*args, **kwargs)
 
-    def create_recipe_ingredients(self, recipe):
-        """
-        Add ingredients to the new recipe.
-        """
-        for ingredient_title, quantity in self.ingredients.items():
-            ingredient = get_object_or_404(Ingredient,
-                                           name=ingredient_title)
-            recipeingredients = RecipeIngredients(recipe=recipe,
-                                                  ingredient=ingredient,
-                                                  quantity=quantity)
-            recipeingredients.save()
-
     def clean(self):
         """
         Validate recipeingredients data.
@@ -61,12 +49,19 @@ class RecipeForm(ModelForm):
                 if recipe.author_id is None:
                     recipe.author = user
                 slug = slugify(self.cleaned_data['title'])
-                if Recipe.objects.filter(slug=slug).exists():
-                    slug = uuid4()
                 recipe.slug = slug
                 recipe.save()
                 recipe.recipeingredients.all().delete()
-                self.create_recipe_ingredients(recipe)
+                ingredients = self.get_ingredients()
+                ingredients_in_recipe = []
+                for name, quantity in ingredients.items():
+                    ingredients_in_recipe.append(RecipeIngredients(
+                        recipe=recipe,
+                        ingredient=get_object_or_404(
+                            Ingredient, name__exact=name),
+                        quantity=int(quantity),
+                    ))
+                RecipeIngredients.objects.bulk_create(ingredients_in_recipe)
                 self.save_m2m()
         except IntegrityError as save_error:
             raise BadRequest('Error while saving') from save_error
@@ -76,10 +71,12 @@ class RecipeForm(ModelForm):
         """
         Extract ingredients from recipe.
         """
+        ingredients = {}
         for key, ingredient_name in self.data.items():
             if key.startswith('nameIngredient'):
                 ingredient_value = self.data['valueIngredient' + key[14:]]
-                self.ingredients[ingredient_name] = float(ingredient_value)
+                ingredients[ingredient_name] = int(ingredient_value)
+        return ingredients
 
     class Meta:
         model = Recipe

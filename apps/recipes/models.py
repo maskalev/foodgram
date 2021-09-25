@@ -32,7 +32,7 @@ class Tag(models.Model):
     """
     title = models.CharField(
         max_length=20,
-        verbose_name='Tag title'
+        verbose_name='Tag title',
     )
     slug = models.SlugField(
         max_length=20,
