@@ -48,8 +48,6 @@ class RecipeForm(ModelForm):
         """
         self.get_ingredients()
         cleaned_data = super().clean()
-        if not self.ingredients:
-            ValidationError('Ingredients list is empty')
         return cleaned_data
 
     def save(self, *args, **kwargs):
