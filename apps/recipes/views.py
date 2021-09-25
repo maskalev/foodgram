@@ -103,7 +103,6 @@ def add_recipe(request):
     if recipe_form.is_valid():
         recipe = recipe_form.save(user=request.user)
         return redirect(reverse('recipe', args=(recipe.author, recipe.slug)))
-    recipe_form = RecipeForm()
     return render(request, 'recipes/recipe_form.html',
                   {
                       'form': recipe_form,

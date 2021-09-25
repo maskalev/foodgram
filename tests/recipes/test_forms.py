@@ -36,18 +36,6 @@ class RecipeFormTest(TestCase):
         )
         assert Recipe.objects.count() == 9
 
-    def test_create_recipe_ingredients_in_db(self):
-        """
-        Add recipe's ingredients to db.
-        """
-        assert RecipeIngredients.objects.count() == 8
-        RecipeIngredients.objects.create(
-            recipe=self.recipe,
-            ingredient=self.ingredient,
-            quantity=1,
-        )
-        assert RecipeIngredients.objects.count() == 9
-
     def test_delete_recipe_from_db(self):
         """
         Delete recipe and recipe's ingredients from database.

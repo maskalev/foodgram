@@ -80,9 +80,9 @@
                          {{ item.ingredient.unit }}
                   </span>
                   <span class="form__field-item-delete"></span>
-                  <input id="titleIngredient_{{ counter }}"
-                         name="titleIngredient_{{ counter }}" type="hidden"
-                         value="{{ item.ingredient.title }}">
+                  <input id="nameIngredient_{{ counter }}"
+                         name="nameIngredient_{{ counter }}" type="hidden"
+                         value="{{ item.ingredient.name }}">
                   <input id="valueIngredient_{{ counter }}"
                          name="valueIngredient_{{ counter }}" type="hidden"
                          value="{{ item.quantity|floatformat }}">
