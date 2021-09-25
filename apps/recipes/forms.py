@@ -79,7 +79,7 @@ class RecipeForm(ModelForm):
     class Meta:
         model = Recipe
         fields = ('title', 'description', 'tags', 'image', 'cooking_time',
-                  'slug', 'ingredients')
+                  'slug',)
         widgets = {
             'description': Textarea(attrs={'rows': 8}),
             'tags': CheckboxSelectMultiple(),
