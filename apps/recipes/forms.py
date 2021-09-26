@@ -1,4 +1,4 @@
-from django.core.exceptions import BadRequest
+from django.core.exceptions import BadRequest, ValidationError
 from django.db import IntegrityError, transaction
 from django.forms import (CheckboxSelectMultiple, ModelForm, SelectMultiple,
                           Textarea)
@@ -74,6 +74,8 @@ class RecipeForm(ModelForm):
             if key.startswith('nameIngredient'):
                 ingredient_value = self.data['valueIngredient' + key[14:]]
                 ingredients[ingredient_name] = int(ingredient_value)
+        if not ingredients:
+            raise ValidationError('Список ингредиентов не может быть пустым!')
         return ingredients
 
     class Meta:
