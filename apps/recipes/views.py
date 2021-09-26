@@ -4,6 +4,7 @@ from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
+from pytils.translit import slugify
 
 from apps.recipes.forms import RecipeForm, TagForm
 from apps.recipes.models import Follow, Purchase, Recipe, Tag
@@ -120,6 +121,8 @@ def edit_recipe(request, username, slug=None):
         instance=recipe
     )
     if not recipe_form.is_valid():
+        slug = slugify(recipe.title)
+        recipe.slug = slug
         return render(request, 'recipes/recipe_form.html',
                       {
                           'form': recipe_form,
