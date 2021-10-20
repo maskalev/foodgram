@@ -1,4 +1,5 @@
 ![YAMdb workflow](https://github.com/maskalev/foodgram-project-react/actions/workflows/main.yml/badge.svg)
+
 # foodgram-project
 
 Сервис для создания рецептов.
