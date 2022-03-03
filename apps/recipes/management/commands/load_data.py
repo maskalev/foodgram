@@ -16,8 +16,8 @@ class Command(BaseCommand):
             with open('apps/recipes/data/ingredients.csv') as file:
                 file_reader = csv.reader(file)
                 for row in file_reader:
-                    title, unit = row
-                    Ingredient.objects.get_or_create(title=title, unit=unit)
+                    name, unit = row
+                    Ingredient.objects.get_or_create(name=name, unit=unit)
             logging.info(msg='Ingredients was upload successfully!')
         except IntegrityError:
             logging.error(msg='Ingredients are not unique.')
