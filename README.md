@@ -50,7 +50,7 @@ Foodgram («Продуктовый помощник») - дипломный пр
 ## Как запустить проект локально
 1. Скопируйте проект
 ```commandline
-git clone git@github.com:maskalev/foodgram-project-react.git`
+git clone git@github.com:maskalev/foodgram.git
 ```
 
 2. В корне проекта создайте файл .env
