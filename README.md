@@ -85,11 +85,13 @@ docker-compose exec -T web python3 manage.py collectstatic --no-input
 docker-compose restart
 ```
 
-7. Скопируйте ингредиенты
+7. Скопируйте данные
 ```commandline
 docker-compose exec -T web python manage.py loaddata -e=auth -e=contenttypes fixtures.json
 ```
 
 Сервис доступен на *localhost*.
+
+Документация API доступна на *localhost/redoc/*.
 
 Теперь вы можете записывать свои рецепты и пользоваться другими функциями сервиса!
