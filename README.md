@@ -94,4 +94,6 @@ docker-compose exec -T web python manage.py loaddata -e=auth -e=contenttypes fix
 
 Документация API доступна на *localhost/redoc/*.
 
+Логин/пароль суперпользователя: *root/admin*.
+
 Теперь вы можете записывать свои рецепты и пользоваться другими функциями сервиса!
