@@ -13,8 +13,6 @@
     <p class="custom-text-block">
       <a href="https://github.com/maskalev">Профиль на Гитхабе</a>
     </p>
-    <div class="custom-button-block">
-      <a href="{% url 'index' %}" class="button button_style_blue">Перейти на главную</a>
-    </div>
+    {% include 'includes/buttons/mainpage.html' %}
   </div>
 {% endblock %}
