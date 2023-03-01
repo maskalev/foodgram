@@ -21,7 +21,7 @@ class CreateDestroyView(viewsets.ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         filter_kwargs = {
             self.lookup_field: self.kwargs[self.lookup_field],
-            'user': self.request.user,
+            "user": self.request.user,
         }
 
         object = get_object_or_404(queryset, **filter_kwargs)
@@ -43,7 +43,7 @@ class FavoritesView(CreateDestroyView):
     """
     queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer
-    lookup_field = 'recipe'
+    lookup_field = "recipe"
 
 
 class PurchaseView(CreateDestroyView):
@@ -52,7 +52,7 @@ class PurchaseView(CreateDestroyView):
     """
     queryset = Purchase.objects.all()
     serializer_class = PurchaseSerializer
-    lookup_field = 'recipe'
+    lookup_field = "recipe"
 
 
 class FollowView(CreateDestroyView):
@@ -61,7 +61,7 @@ class FollowView(CreateDestroyView):
     """
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer
-    lookup_field = 'author'
+    lookup_field = "author"
 
 
 class IngredientsView(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -71,4 +71,4 @@ class IngredientsView(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('$name',)
+    search_fields = ("$name",)

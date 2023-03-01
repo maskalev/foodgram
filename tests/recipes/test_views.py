@@ -7,7 +7,7 @@ from apps.users.models import User
 
 
 class RecipeViewTest(TestCase):
-    fixtures = ['recipes.json', 'users.json']
+    fixtures = ["recipes.json", "users.json"]
 
     @classmethod
     def setUpClass(cls):
@@ -28,9 +28,9 @@ class RecipeViewTest(TestCase):
         """
         Index page shows the correct context.
         """
-        response = RecipeViewTest.authorized_client.get(reverse('index'))
-        self.assertEqual(len(response.context['recipe_list']), 6)
-        self.assertEqual(response.context['recipe_list'][0],
+        response = RecipeViewTest.authorized_client.get(reverse("index"))
+        self.assertEqual(len(response.context["recipe_list"]), 6)
+        self.assertEqual(response.context["recipe_list"][0],
                          RecipeViewTest.recipe)
 
     def test_authorlist_page_show_correct_context(self):
@@ -38,33 +38,33 @@ class RecipeViewTest(TestCase):
         Authorlist page shows the correct context.
         """
         response = RecipeViewTest.authorized_client.get(
-            reverse('authorlist',
+            reverse("authorlist",
                     kwargs={
-                        'username': RecipeViewTest.author.username,
+                        "username": RecipeViewTest.author.username,
                     }))
         recipe_context = {
-            len(response.context['recipe_list']): 6,
-            response.context['recipe']: RecipeViewTest.recipe,
-            response.context['author']: RecipeViewTest.author,
+            len(response.context["recipe_list"]): 6,
+            response.context["recipe"]: RecipeViewTest.recipe,
+            response.context["author"]: RecipeViewTest.author,
         }
         for test_value, expected_value in recipe_context.items():
             with self.subTest(expected_value=expected_value):
                 self.assertEqual(test_value, expected_value)
-        assert response.context['recipe_list'][0] == RecipeViewTest.recipe
+        assert response.context["recipe_list"][0] == RecipeViewTest.recipe
 
     def test_recipe_page_show_correct_context(self):
         """
         Recipe page shows the correct context.
         """
         response = RecipeViewTest.authorized_client.get(
-            reverse('recipe',
+            reverse("recipe",
                     kwargs={
-                        'username': RecipeViewTest.author.username,
-                        'slug': RecipeViewTest.recipe.slug,
+                        "username": RecipeViewTest.author.username,
+                        "slug": RecipeViewTest.recipe.slug,
                     }))
         recipe_context = {
-            response.context['recipe']: RecipeViewTest.recipe,
-            response.context['author']: RecipeViewTest.author,
+            response.context["recipe"]: RecipeViewTest.recipe,
+            response.context["author"]: RecipeViewTest.author,
         }
         for test_value, expected_value in recipe_context.items():
             with self.subTest(expected_value=expected_value):
@@ -74,18 +74,18 @@ class RecipeViewTest(TestCase):
         """
         Add_recipe page shows the correct context.
         """
-        response = RecipeViewTest.authorized_client.get(reverse('add_recipe'))
+        response = RecipeViewTest.authorized_client.get(reverse("add_recipe"))
         new_context = {
-            'title': forms.fields.CharField,
-            'description': forms.fields.CharField,
-            'tags': forms.fields.ChoiceField,
-            'image': forms.fields.ImageField,
-            'cooking_time': forms.fields.IntegerField,
-            'slug': forms.fields.SlugField,
+            "title": forms.fields.CharField,
+            "description": forms.fields.CharField,
+            "tags": forms.fields.ChoiceField,
+            "image": forms.fields.ImageField,
+            "cooking_time": forms.fields.IntegerField,
+            "slug": forms.fields.SlugField,
         }
         for value, expected in new_context.items():
             with self.subTest(value=value):
-                form_field = response.context['form'].fields.get(value)
+                form_field = response.context["form"].fields.get(value)
                 self.assertIsInstance(obj=form_field, cls=expected)
 
     def test_edit_recipe_page_show_correct_context(self):
@@ -93,79 +93,79 @@ class RecipeViewTest(TestCase):
         Edit recipe page show the correct context.
         """
         response = RecipeViewTest.recipe_author.get(
-            reverse('edit_recipe',
+            reverse("edit_recipe",
                     kwargs={
-                        'username': RecipeViewTest.author.username,
-                        'slug': RecipeViewTest.recipe.slug,
+                        "username": RecipeViewTest.author.username,
+                        "slug": RecipeViewTest.recipe.slug,
                     }))
         edit_context = {
-            'title': forms.fields.CharField,
-            'description': forms.fields.CharField,
-            'tags': forms.fields.ChoiceField,
-            'image': forms.fields.ImageField,
-            'cooking_time': forms.fields.IntegerField,
-            'slug': forms.fields.SlugField,
+            "title": forms.fields.CharField,
+            "description": forms.fields.CharField,
+            "tags": forms.fields.ChoiceField,
+            "image": forms.fields.ImageField,
+            "cooking_time": forms.fields.IntegerField,
+            "slug": forms.fields.SlugField,
         }
         for value, expected in edit_context.items():
             with self.subTest(value=value):
-                form_field = response.context['form'].fields.get(value)
+                form_field = response.context["form"].fields.get(value)
                 self.assertIsInstance(obj=form_field, cls=expected)
 
     def test_favorites_page_show_correct_context(self):
         """
         Favorites page shows the correct context.
         """
-        response = RecipeViewTest.authorized_client.get(reverse('favorites'))
-        assert len(response.context['recipe_list']) == 1
-        assert response.context['recipe_list'][0] == RecipeViewTest.recipe
+        response = RecipeViewTest.authorized_client.get(reverse("favorites"))
+        assert len(response.context["recipe_list"]) == 1
+        assert response.context["recipe_list"][0] == RecipeViewTest.recipe
 
     def test_subscriptions_page_show_correct_context(self):
         """
         Subscriptions page shows the correct context.
         """
-        response = RecipeViewTest.authorized_client.get(reverse('favorites'))
-        assert len(response.context['recipe_list']) == 1
-        assert response.context['recipe_list'][0] == RecipeViewTest.recipe
+        response = RecipeViewTest.authorized_client.get(reverse("favorites"))
+        assert len(response.context["recipe_list"]) == 1
+        assert response.context["recipe_list"][0] == RecipeViewTest.recipe
 
     def test_purchases_page_show_correct_context(self):
         """
         Purchases page shows the correct context.
         """
-        response = RecipeViewTest.authorized_client.get(reverse('purchases'))
-        assert len(response.context['purchase_list']) == 1
-        assert response.context['purchase_list'][0] == RecipeViewTest.purchase
+        response = RecipeViewTest.authorized_client.get(reverse("purchases"))
+        assert len(response.context["purchase_list"]) == 1
+        assert response.context["purchase_list"][0] == RecipeViewTest.purchase
 
     def test_index_paginator_shows_correct_number_of_objects(self):
         """
         Paginator shows the correct number of objects on index page.
         """
         pages = {
-            reverse('index'): 6,
-            (reverse('index') + '?page=2'): 2,
+            reverse("index"): 6,
+            (reverse("index") + "?page=2"): 2,
         }
         for page, obj_count in pages.items():
             with self.subTest(page=page):
                 response = RecipeViewTest.authorized_client.get(page)
-                assert len(response.context['recipe_list']) == obj_count
+                assert len(response.context["recipe_list"]) == obj_count
 
     def test_authorlist_paginator_shows_correct_number_of_objects(self):
         """
         Paginator shows the correct number of objects on authorlist page.
         """
         pages = {
-            reverse('authorlist',
+            reverse("authorlist",
                     kwargs={
-                        'username': RecipeViewTest.author.username,
+                        "username": RecipeViewTest.author.username,
                     }): 6,
-            reverse('authorlist',
+            reverse("authorlist",
                     kwargs={
-                        'username': RecipeViewTest.author.username,
-                    }) + '?page=2': 1,
+                        "username": RecipeViewTest.author.username,
+                    }) + "?page=2": 1,
         }
         for page, obj_count in pages.items():
             with self.subTest(page=page):
                 response = RecipeViewTest.authorized_client.get(page)
-                assert len(response.context['recipe_list']) == obj_count
+                assert len(response.context["recipe_list"]) == obj_count
 
     def test_admin_delete_recipe(self):
         """
@@ -173,10 +173,10 @@ class RecipeViewTest(TestCase):
         """
         assert Recipe.objects.count() == 8
         RecipeViewTest.superuser.post(
-            reverse('delete_recipe',
+            reverse("delete_recipe",
                     kwargs={
-                        'username': RecipeViewTest.author.username,
-                        'slug': RecipeViewTest.recipe.slug,
+                        "username": RecipeViewTest.author.username,
+                        "slug": RecipeViewTest.recipe.slug,
                     }))
         assert Recipe.objects.count() == 7
 
@@ -186,10 +186,10 @@ class RecipeViewTest(TestCase):
         """
         assert Recipe.objects.count() == 8
         RecipeViewTest.authorized_client.post(
-            reverse('delete_recipe',
+            reverse("delete_recipe",
                     kwargs={
-                        'username': RecipeViewTest.author.username,
-                        'slug': RecipeViewTest.recipe.slug,
+                        "username": RecipeViewTest.author.username,
+                        "slug": RecipeViewTest.recipe.slug,
                     }))
         assert Recipe.objects.count() == 8
 
@@ -197,5 +197,5 @@ class RecipeViewTest(TestCase):
         """
         User who follows nobody don't see authors in Favorite.
         """
-        response = RecipeViewTest.recipe_author.get(reverse('favorites'))
-        assert len(response.context['recipe_list']) == 0
+        response = RecipeViewTest.recipe_author.get(reverse("favorites"))
+        assert len(response.context["recipe_list"]) == 0

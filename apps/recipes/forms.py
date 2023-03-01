@@ -14,9 +14,9 @@ class TagForm(ModelForm):
     """
     class Meta:
         model = Recipe
-        fields = ('tags',)
+        fields = ("tags",)
         widgets = {
-            'tags': SelectMultiple(),
+            "tags": SelectMultiple(),
         }
 
 
@@ -40,13 +40,13 @@ class RecipeForm(ModelForm):
         """
         Save recipe.
         """
-        user = kwargs.get('user')
+        user = kwargs.get("user")
         try:
             with transaction.atomic():
                 recipe = super().save(commit=False)
                 if recipe.author_id is None:
                     recipe.author = user
-                slug = slugify(self.cleaned_data['title'])
+                slug = slugify(self.cleaned_data["title"])
                 recipe.slug = slug
                 recipe.save()
                 recipe.recipeingredients.all().delete()
@@ -62,7 +62,7 @@ class RecipeForm(ModelForm):
                 RecipeIngredients.objects.bulk_create(ingredients_in_recipe)
                 self.save_m2m()
         except IntegrityError as save_error:
-            raise BadRequest('Error while saving') from save_error
+            raise BadRequest("Error while saving") from save_error
         return recipe
 
     def get_ingredients(self):
@@ -71,18 +71,18 @@ class RecipeForm(ModelForm):
         """
         ingredients = {}
         for key, ingredient_name in self.data.items():
-            if key.startswith('nameIngredient'):
-                ingredient_value = self.data['valueIngredient' + key[14:]]
+            if key.startswith("nameIngredient"):
+                ingredient_value = self.data["valueIngredient" + key[14:]]
                 ingredients[ingredient_name] = int(ingredient_value)
         if not ingredients:
-            raise ValidationError('Список ингредиентов не может быть пустым!')
+            raise ValidationError("Список ингредиентов не может быть пустым!")
         return ingredients
 
     class Meta:
         model = Recipe
-        fields = ('title', 'description', 'tags', 'image', 'cooking_time',
-                  'slug',)
+        fields = ("title", "description", "tags", "image", "cooking_time",
+                  "slug",)
         widgets = {
-            'description': Textarea(attrs={'rows': 8}),
-            'tags': CheckboxSelectMultiple(),
+            "description": Textarea(attrs={"rows": 8}),
+            "tags": CheckboxSelectMultiple(),
         }

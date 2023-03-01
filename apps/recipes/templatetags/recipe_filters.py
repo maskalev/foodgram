@@ -11,9 +11,9 @@ def url_replace(context, **kwargs):
     """
     Encode URL with context.
     """
-    query = context['request'].GET.copy()
-    if query.get('page') is not None:
-        query.pop('page')
+    query = context["request"].GET.copy()
+    if query.get("page") is not None:
+        query.pop("page")
     query.update(kwargs)
     return query.urlencode()
 
@@ -66,10 +66,10 @@ def remainsrecipesnumber(number):
     remains = number % 10
     still_numbers = number - 3
     if 7 < number < 24:
-        return f'Ещё {still_numbers} рецептов...'
+        return f"Ещё {still_numbers} рецептов..."
     elif remains == 4:
-        return f'Ещё {still_numbers} рецепт...'
+        return f"Ещё {still_numbers} рецепт..."
     elif 4 < remains < 8:
-        return f'Ещё {still_numbers} рецепта...'
+        return f"Ещё {still_numbers} рецепта..."
     else:
-        return f'Ещё {still_numbers} рецептов...'
+        return f"Ещё {still_numbers} рецептов..."

@@ -8,14 +8,14 @@ from rest_framework import permissions
 
 from foodgram import settings
 
-handler400 = 'apps.recipes.views.bad_request' # noqa
-handler404 = 'apps.recipes.views.page_not_found' # noqa
-handler500 = 'apps.recipes.views.server_error' # noqa
+handler400 = "apps.recipes.views.bad_request" # noqa
+handler404 = "apps.recipes.views.page_not_found" # noqa
+handler500 = "apps.recipes.views.server_error" # noqa
 
 schema_view = get_schema_view(
    openapi.Info(
       title="Snippets API",
-      default_version='v1',
+      default_version="v1",
       description="Test description",
       terms_of_service="https://www.google.com/policies/terms/",
       contact=openapi.Contact(email="contact@snippets.local"),
@@ -26,16 +26,16 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('auth/', include('apps.users.urls')),
-    path('auth/', include('django.contrib.auth.urls')),
-    path('api/', include('apps.api.urls')),
-    path('about/', include('apps.about.urls')),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),
-         name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0),
-         name='schema-redoc'),
-    path('', include('apps.recipes.urls')),
+    path("admin/", admin.site.urls),
+    path("auth/", include("apps.users.urls")),
+    path("auth/", include("django.contrib.auth.urls")),
+    path("api/", include("apps.api.urls")),
+    path("about/", include("apps.about.urls")),
+    path("swagger/", schema_view.with_ui("swagger", cache_timeout=0),
+         name="schema-swagger-ui"),
+    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0),
+         name="schema-redoc"),
+    path("", include("apps.recipes.urls")),
 ]
 
 if settings.DEBUG:

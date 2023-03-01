@@ -6,7 +6,7 @@ from apps.users.models import User
 
 
 class RecipeFormTest(TestCase):
-    fixtures = ['recipes.json', 'users.json']
+    fixtures = ["recipes.json", "users.json"]
 
     @classmethod
     def setUpClass(cls):
@@ -28,10 +28,10 @@ class RecipeFormTest(TestCase):
         """
         assert Recipe.objects.count() == 8
         Recipe.objects.create(
-            title='recipe-title',
-            description='recipe-description',
+            title="recipe-title",
+            description="recipe-description",
             cooking_time=10,
-            slug='recipe-slug',
+            slug="recipe-slug",
             author=RecipeFormTest.author
         )
         assert Recipe.objects.count() == 9
@@ -43,10 +43,10 @@ class RecipeFormTest(TestCase):
         assert Recipe.objects.count() == 8
         assert RecipeIngredients.objects.count() == 8
         RecipeFormTest.recipe_author.get(
-            reverse('delete_recipe',
+            reverse("delete_recipe",
                     kwargs={
-                        'username': RecipeFormTest.author.username,
-                        'slug': RecipeFormTest.recipe.slug,
+                        "username": RecipeFormTest.author.username,
+                        "slug": RecipeFormTest.recipe.slug,
                     }))
         assert Recipe.objects.count() == 7
         assert RecipeIngredients.objects.count() == 7

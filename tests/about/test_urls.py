@@ -4,7 +4,7 @@ from django.urls import reverse
 
 
 class AboutURLTest(TestCase):
-    fixtures = ['recipes.json', 'users.json']
+    fixtures = ["recipes.json", "users.json"]
 
     @classmethod
     def setUpClass(cls):
@@ -19,9 +19,9 @@ class AboutURLTest(TestCase):
         Test pages existing for anonymous user.
         """
         pages_status_code = {
-            reverse('author'): 200,
-            reverse('tech'): 200,
-            reverse('foodgram'): 200,
+            reverse("author"): 200,
+            reverse("tech"): 200,
+            reverse("foodgram"): 200,
         }
         for name, status_code in pages_status_code.items():
             with self.subTest(name=name):
@@ -33,9 +33,9 @@ class AboutURLTest(TestCase):
         Test pages existing for authorized user.
         """
         pages_status_code = {
-            reverse('author'): 200,
-            reverse('tech'): 200,
-            reverse('foodgram'): 200,
+            reverse("author"): 200,
+            reverse("tech"): 200,
+            reverse("foodgram"): 200,
         }
         for name, status_code in pages_status_code.items():
             with self.subTest(name=name):
@@ -47,9 +47,9 @@ class AboutURLTest(TestCase):
         Test URLs use correct templates.
         """
         templates_url_names = {
-            reverse('author'): 'about/author.html',
-            reverse('tech'): 'about/tech.html',
-            reverse('foodgram'): 'about/foodgram.html',
+            reverse("author"): "about/author.html",
+            reverse("tech"): "about/tech.html",
+            reverse("foodgram"): "about/foodgram.html",
         }
         for reverse_name, template in templates_url_names.items():
             with self.subTest(reverse_name=reverse_name):

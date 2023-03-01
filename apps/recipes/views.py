@@ -19,17 +19,17 @@ class RecipeList(ListView):
     """
     model = Recipe
     paginate_by = PAGINATOR
-    template_name = 'recipes/recipe_list.html'
+    template_name = "recipes/recipe_list.html"
 
     def get_queryset(self):
-        default_filter = Tag.objects.values_list('id')
-        posted_filter = self.request.GET.getlist('tags', default_filter)
+        default_filter = Tag.objects.values_list("id")
+        posted_filter = self.request.GET.getlist("tags", default_filter)
         queryset = Recipe.objects.filter(tags__in=posted_filter).distinct()
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = TagForm(self.request.GET or None)
+        context["form"] = TagForm(self.request.GET or None)
         return context
 
 
@@ -39,13 +39,13 @@ class AuthorList(RecipeList):
     """
     def get_queryset(self):
         queryset = super().get_queryset()
-        author = get_object_or_404(User, username=self.kwargs['username'])
+        author = get_object_or_404(User, username=self.kwargs["username"])
         return queryset.filter(author=author)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        author = get_object_or_404(User, username=self.kwargs['username'])
-        context['author'] = author
+        author = get_object_or_404(User, username=self.kwargs["username"])
+        context["author"] = author
         return context
 
 
@@ -54,7 +54,7 @@ class RecipeDetail(DetailView):
     DetailView for recipe.
     """
     model = Recipe
-    template_name = 'recipes/recipe_detail.html'
+    template_name = "recipes/recipe_detail.html"
 
 
 class FavoritesList(LoginRequiredMixin, RecipeList):
@@ -63,12 +63,12 @@ class FavoritesList(LoginRequiredMixin, RecipeList):
     """
     def get_queryset(self):
         queryset = super().get_queryset()
-        all_favorites = self.request.user.favorites.values('recipe')
+        all_favorites = self.request.user.favorites.values("recipe")
         return queryset.filter(id__in=all_favorites)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['favorites'] = True
+        context["favorites"] = True
         return context
 
 
@@ -78,7 +78,7 @@ class FollowList(LoginRequiredMixin, ListView):
     """
     model = Follow
     paginate_by = PAGINATOR
-    template_name = 'recipes/follow_list.html'
+    template_name = "recipes/follow_list.html"
 
     def get_queryset(self):
         return Follow.objects.filter(user=self.request.user)
@@ -89,7 +89,7 @@ class PurchaseList(LoginRequiredMixin, ListView):
     ListView for recipes in purchase list.
     """
     model = Purchase
-    template_name = 'recipes/purchase_list.html'
+    template_name = "recipes/purchase_list.html"
 
     def get_queryset(self):
         return Purchase.objects.filter(user=self.request.user)
@@ -103,10 +103,10 @@ def add_recipe(request):
     recipe_form = RecipeForm(request.POST or None, files=request.FILES or None)
     if recipe_form.is_valid():
         recipe = recipe_form.save(user=request.user)
-        return redirect(reverse('recipe', args=(recipe.author, recipe.slug)))
-    return render(request, 'recipes/recipe_form.html',
+        return redirect(reverse("recipe", args=(recipe.author, recipe.slug)))
+    return render(request, "recipes/recipe_form.html",
                   {
-                      'form': recipe_form,
+                      "form": recipe_form,
                   })
 
 
@@ -114,7 +114,7 @@ def add_recipe(request):
 def edit_recipe(request, username, slug=None):
     recipe = get_object_or_404(Recipe, slug=slug, author__username=username)
     if not request.user.is_superuser and request.user != recipe.author:
-        return redirect('index')
+        return redirect("index")
     recipe_form = RecipeForm(
         request.POST or None,
         request.FILES or None,
@@ -123,13 +123,13 @@ def edit_recipe(request, username, slug=None):
     if not recipe_form.is_valid():
         slug = slugify(recipe.title)
         recipe.slug = slug
-        return render(request, 'recipes/recipe_form.html',
+        return render(request, "recipes/recipe_form.html",
                       {
-                          'form': recipe_form,
-                          'recipe': recipe,
+                          "form": recipe_form,
+                          "recipe": recipe,
                       })
     recipe_form.save()
-    return redirect(reverse('recipe', args=(recipe.author, recipe.slug)))
+    return redirect(reverse("recipe", args=(recipe.author, recipe.slug)))
 
 
 @login_required
@@ -142,7 +142,7 @@ def delete_recipe(request, username, slug):
                                slug=slug)
     if request.user.is_superuser or request.user == recipe.author:
         recipe.delete()
-    return redirect('index')
+    return redirect("index")
 
 
 @login_required
@@ -151,20 +151,20 @@ def purchase_list_pdf(request):
     Create PDF from purchase list.
     """
     ingredients = request.user.purchases.select_related(
-        'recipe'
+        "recipe"
     ).order_by(
-        'recipe__ingredients__name'
+        "recipe__ingredients__name"
     ).values(
-        'recipe__ingredients__name', 'recipe__ingredients__unit'
-    ).annotate(quantity=Sum('recipe__recipeingredients__quantity')).all()
-    return create_pdf(ingredients, 'purchase_list.pdf')
+        "recipe__ingredients__name", "recipe__ingredients__unit"
+    ).annotate(quantity=Sum("recipe__recipeingredients__quantity")).all()
+    return create_pdf(ingredients, "purchase_list.pdf")
 
 
 def page_not_found(request, exception):
     return render(
         request,
-        'misc/404.html',
-        {'path': request.path},
+        "misc/404.html",
+        {"path": request.path},
         status=404
     )
 
@@ -172,8 +172,8 @@ def page_not_found(request, exception):
 def server_error(request):
     return render(
         request,
-        'misc/500.html',
-        {'path': request.path},
+        "misc/500.html",
+        {"path": request.path},
         status=500
     )
 
@@ -181,7 +181,7 @@ def server_error(request):
 def bad_request(request, exception):
     return render(
         request,
-        'misc/400.html',
-        {'path': request.path},
+        "misc/400.html",
+        {"path": request.path},
         status=400
     )

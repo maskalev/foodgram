@@ -6,12 +6,12 @@ from reportlab.pdfgen import canvas
 
 from foodgram.settings import STATIC_ROOT
 
-TYPEFACE = 'Arial'
-TYPEFACE_FILE = 'fonts/arial.ttf'
+TYPEFACE = "Arial"
+TYPEFACE_FILE = "fonts/arial.ttf"
 HEAD_FONTSIZE = 40
 HEAD_X = 150
 HEAD_Y = 800
-HEAD_TEXT = 'Список покупок'
+HEAD_TEXT = "Список покупок"
 BODY_FONTSIZE = 20
 BODY_X = 50
 BODY_Y = 750
@@ -35,9 +35,9 @@ def create_pdf(ingredients, filename):
     line_y = -1
     for pos, val in enumerate(ingredients, start=1):
         line_y += 1
-        string = (f'{pos}. {val["recipe__ingredients__name"]} '
-                  f'({val["recipe__ingredients__unit"]}): '
-                  f'{val["quantity"]}')
+        string = (f"{pos}. {val['recipe__ingredients__name']} "
+                  f"({val['recipe__ingredients__unit']}): "
+                  f"{val['quantity']}")
         pdf_canvas.drawString(BODY_X,
                               BODY_Y - BODY_LINE_SPACING * line_y,
                               string)

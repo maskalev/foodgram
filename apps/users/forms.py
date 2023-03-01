@@ -9,8 +9,8 @@ class CreationForm(UserCreationForm):
     """
     class Meta(UserCreationForm.Meta):
         """
-        Use :model:'User'.
-        With fields 'name', 'username', 'email'.
+        Use :model:"User".
+        With fields "name", "username", "email".
         """
         model = User
-        fields = ('name', 'username', 'email')
+        fields = ("name", "username", "email")

@@ -6,17 +6,17 @@ from apps.users.models import User
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = (
-        'name',
-        'username',
-        'email',
+        "name",
+        "username",
+        "email",
     )
     search_fields = (
-        'name',
-        'username',
-        'email',
+        "name",
+        "username",
+        "email",
     )
     list_filter = (
-        'name',
-        'username',
-        'email',
+        "name",
+        "username",
+        "email",
     )

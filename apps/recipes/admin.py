@@ -18,19 +18,19 @@ class RecipeAdmin(admin.ModelAdmin):
     Admin class for Recipe model.
     """
     list_display = (
-        'author',
-        'title',
-        'slug',
+        "author",
+        "title",
+        "slug",
     )
     search_fields = (
-        'title',
+        "title",
     )
     list_filter = (
-        'author',
-        'title',
-        'tags',
+        "author",
+        "title",
+        "tags",
     )
-    prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {"slug": ("title",)}
     inlines = [
         RecipeIngredientsInline,
     ]
@@ -42,24 +42,24 @@ class TagAdmin(admin.ModelAdmin):
     Admin class for Tag model.
     """
     list_display = (
-        'title',
-        'slug',
-        'color',
+        "title",
+        "slug",
+        "color",
     )
-    prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {"slug": ("title",)}
 
 
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
     list_display = (
-        'name',
-        'unit',
+        "name",
+        "unit",
     )
     search_fields = (
-        'name',
+        "name",
     )
     list_filter = (
-        'name',
+        "name",
     )
 
 

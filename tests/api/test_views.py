@@ -9,9 +9,9 @@ from apps.users.models import User
 
 class ApiURLTest(APITestCase, URLPatternsTestCase):
     urlpatterns = [
-        path('v1/', include('apps.api.urls')),
+        path("v1/", include("apps.api.urls")),
     ]
-    fixtures = ['recipes.json', 'users.json']
+    fixtures = ["recipes.json", "users.json"]
 
     @classmethod
     def setUpClass(cls):
@@ -25,13 +25,13 @@ class ApiURLTest(APITestCase, URLPatternsTestCase):
         Response data is correct.
         """
         pages_data = {
-            reverse('favorite-list'): OrderedDict([('id', 1), ('recipe', 1)]),
-            reverse('purchase-list'): OrderedDict([('id', 1), ('recipe', 1)]),
-            reverse('follow-list'): OrderedDict([('id', 1), ('author', 2)]),
-            reverse('ingredient-list'): OrderedDict([
-                ('id', 1),
-                ('name', 'ingredient1'),
-                ('unit', 'unit1')]),
+            reverse("favorite-list"): OrderedDict([("id", 1), ("recipe", 1)]),
+            reverse("purchase-list"): OrderedDict([("id", 1), ("recipe", 1)]),
+            reverse("follow-list"): OrderedDict([("id", 1), ("author", 2)]),
+            reverse("ingredient-list"): OrderedDict([
+                ("id", 1),
+                ("name", "ingredient1"),
+                ("unit", "unit1")]),
         }
         for name, data in pages_data.items():
             with self.subTest(name=name):

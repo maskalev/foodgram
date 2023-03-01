@@ -5,7 +5,7 @@ from apps.recipes.models import (Favorite, Follow, Ingredient, Purchase,
 
 
 class RecipeModelTest(TestCase):
-    fixtures = ['recipes.json', 'users.json']
+    fixtures = ["recipes.json", "users.json"]
 
     @classmethod
     def setUpClass(cls):
@@ -24,8 +24,8 @@ class RecipeModelTest(TestCase):
         """
         ingredient = RecipeModelTest.ingredient
         field_verbose = {
-            'name': 'Ingredient title',
-            'unit': 'Unit of measurement',
+            "name": "Ingredient title",
+            "unit": "Unit of measurement",
         }
         for value, expected in field_verbose.items():
             with self.subTest(value=value):
@@ -38,9 +38,9 @@ class RecipeModelTest(TestCase):
         """
         tag = RecipeModelTest.tag
         field_verbose = {
-            'title': 'Tag title',
-            'slug': 'Tag slug',
-            'color': 'Tag color'
+            "title": "Tag title",
+            "slug": "Tag slug",
+            "color": "Tag color"
         }
         for value, expected in field_verbose.items():
             with self.subTest(value=value):
@@ -52,15 +52,15 @@ class RecipeModelTest(TestCase):
         """
         recipe = RecipeModelTest.recipe
         field_verbose = {
-            'title': 'Title',
-            'description': 'Description',
-            'author': 'Author',
-            'tags': 'Tag',
-            'image': 'Image',
-            'cooking_time': 'Cooking time, min',
-            'ingredients': 'Ingredients',
-            'pub_date': 'Publication date',
-            'slug': 'Recipe slug'
+            "title": "Title",
+            "description": "Description",
+            "author": "Author",
+            "tags": "Tag",
+            "image": "Image",
+            "cooking_time": "Cooking time, min",
+            "ingredients": "Ingredients",
+            "pub_date": "Publication date",
+            "slug": "Recipe slug"
         }
         for value, expected in field_verbose.items():
             with self.subTest(value=value):
@@ -72,9 +72,9 @@ class RecipeModelTest(TestCase):
         """
         recipeingredients = RecipeModelTest.recipeingredients
         field_verbose = {
-            'recipe': 'Recipe',
-            'ingredient': 'Ingredient',
-            'quantity': 'Quantity'
+            "recipe": "Recipe",
+            "ingredient": "Ingredient",
+            "quantity": "Quantity"
         }
         for value, expected in field_verbose.items():
             with self.subTest(value=value):
@@ -87,8 +87,8 @@ class RecipeModelTest(TestCase):
         """
         favorite = RecipeModelTest.favorite
         field_verbose = {
-            'user': 'User',
-            'recipe': 'Recipe',
+            "user": "User",
+            "recipe": "Recipe",
         }
         for value, expected in field_verbose.items():
             with self.subTest(value=value):
@@ -100,8 +100,8 @@ class RecipeModelTest(TestCase):
         """
         purchase = RecipeModelTest.purchase
         field_verbose = {
-            'user': 'User',
-            'recipe': 'Recipe',
+            "user": "User",
+            "recipe": "Recipe",
         }
         for value, expected in field_verbose.items():
             with self.subTest(value=value):
@@ -113,8 +113,8 @@ class RecipeModelTest(TestCase):
         """
         follow = RecipeModelTest.follow
         field_verbose = {
-            'author': 'Author',
-            'user': 'Follower',
+            "author": "Author",
+            "user": "Follower",
         }
         for value, expected in field_verbose.items():
             with self.subTest(value=value):
@@ -125,7 +125,7 @@ class RecipeModelTest(TestCase):
         Name of Ingredient object are expected.
         """
         ingredient = RecipeModelTest.ingredient
-        expected_object_name = f'{ingredient.name} ({ingredient.unit})'
+        expected_object_name = f"{ingredient.name} ({ingredient.unit})"
         assert expected_object_name == str(ingredient)
 
     def test_tag_name(self):
@@ -133,7 +133,7 @@ class RecipeModelTest(TestCase):
         Name of Tag object are expected.
         """
         tag = RecipeModelTest.tag
-        expected_object_name = f'{tag.title}'
+        expected_object_name = f"{tag.title}"
         assert expected_object_name == str(tag)
 
     def test_recipe_name(self):
@@ -141,7 +141,7 @@ class RecipeModelTest(TestCase):
         Name of Recipe object are expected.
         """
         recipe = RecipeModelTest.recipe
-        expected_object_name = f'{recipe.title} by {recipe.author}'
+        expected_object_name = f"{recipe.title} by {recipe.author}"
         assert expected_object_name == str(recipe)
 
     def test_recipeingredients_name(self):
@@ -149,9 +149,9 @@ class RecipeModelTest(TestCase):
         Name of RecipeIngredients object are expected.
         """
         recipeingredients = RecipeModelTest.recipeingredients
-        expected_object_name = (f'{recipeingredients.recipe}, '
-                                f'{recipeingredients.ingredient}, '
-                                f'{recipeingredients.quantity}')
+        expected_object_name = (f"{recipeingredients.recipe}, "
+                                f"{recipeingredients.ingredient}, "
+                                f"{recipeingredients.quantity}")
         assert expected_object_name == str(recipeingredients)
 
     def test_favorite_name(self):
@@ -159,7 +159,7 @@ class RecipeModelTest(TestCase):
         Name of Favorite object are expected.
         """
         favorite = RecipeModelTest.favorite
-        expected_object_name = f'{favorite.user} marked {favorite.recipe}'
+        expected_object_name = f"{favorite.user} marked {favorite.recipe}"
         assert expected_object_name == str(favorite)
 
     def test_purchase_name(self):
@@ -167,8 +167,8 @@ class RecipeModelTest(TestCase):
         Name of Purchase object are expected.
         """
         purchase = RecipeModelTest.purchase
-        expected_object_name = (f'{purchase.user} add to purchase '
-                                f'{purchase.recipe}')
+        expected_object_name = (f"{purchase.user} add to purchase "
+                                f"{purchase.recipe}")
         assert expected_object_name == str(purchase)
 
     def test_follow_name(self):
@@ -176,5 +176,5 @@ class RecipeModelTest(TestCase):
         Name of Follow object are expected.
         """
         follow = RecipeModelTest.follow
-        expected_object_name = f'{follow.user} follows {follow.author}'
+        expected_object_name = f"{follow.user} follows {follow.author}"
         assert expected_object_name == str(follow)

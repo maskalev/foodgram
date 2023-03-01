@@ -7,23 +7,23 @@ class User(AbstractUser):
     Custom user model.
     """
     name = models.CharField(
-        verbose_name='Имя',
+        verbose_name="Имя",
         max_length=256,
     )
     username = models.CharField(
-        verbose_name='Имя пользователя',
+        verbose_name="Имя пользователя",
         max_length=64,
         unique=True,
     )
     email = models.EmailField(
-        verbose_name='Адрес электронной почты',
+        verbose_name="Адрес электронной почты",
         unique=True
     )
     is_superuser = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
+        verbose_name = "User"
+        verbose_name_plural = "Users"
 
     def __str__(self):
         return self.username

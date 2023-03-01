@@ -9,7 +9,7 @@ class IngredientSerializer(serializers.ModelSerializer):
     Serializer for ingredients.
     """
     class Meta:
-        fields = '__all__'
+        fields = "__all__"
         model = Ingredient
 
 
@@ -20,7 +20,7 @@ class FavoriteSerializer(CurrentUserDefault, serializers.ModelSerializer):
     user = HiddenField(default=CurrentUserDefault())
 
     class Meta:
-        fields = '__all__'
+        fields = "__all__"
         model = Favorite
 
 
@@ -31,7 +31,7 @@ class PurchaseSerializer(CurrentUserDefault, serializers.ModelSerializer):
     user = HiddenField(default=CurrentUserDefault())
 
     class Meta:
-        fields = '__all__'
+        fields = "__all__"
         model = Purchase
 
 
@@ -42,5 +42,5 @@ class FollowSerializer(CurrentUserDefault, serializers.ModelSerializer):
     user = HiddenField(default=CurrentUserDefault())
 
     class Meta:
-        fields = '__all__'
+        fields = "__all__"
         model = Follow

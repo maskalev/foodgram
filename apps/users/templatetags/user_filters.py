@@ -9,4 +9,4 @@ def addclass(field, css):
     """
     Return class for input fields.
     """
-    return field.as_widget(attrs={'class': css})
+    return field.as_widget(attrs={"class": css})

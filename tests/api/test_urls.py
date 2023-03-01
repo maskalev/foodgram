@@ -7,9 +7,9 @@ from apps.users.models import User
 
 class ApiURLTest(APITestCase, URLPatternsTestCase):
     urlpatterns = [
-        path('v1/', include('apps.api.urls')),
+        path("v1/", include("apps.api.urls")),
     ]
-    fixtures = ['recipes.json', 'users.json']
+    fixtures = ["recipes.json", "users.json"]
 
     @classmethod
     def setUpClass(cls):
@@ -24,10 +24,10 @@ class ApiURLTest(APITestCase, URLPatternsTestCase):
         Test pages existing for anonymous user.
         """
         pages_status_code = {
-            reverse('favorite-list'): 403,
-            reverse('purchase-list'): 403,
-            reverse('follow-list'): 403,
-            reverse('ingredient-list'): 200,
+            reverse("favorite-list"): 403,
+            reverse("purchase-list"): 403,
+            reverse("follow-list"): 403,
+            reverse("ingredient-list"): 200,
         }
         for name, status_code in pages_status_code.items():
             with self.subTest(name=name):
@@ -39,10 +39,10 @@ class ApiURLTest(APITestCase, URLPatternsTestCase):
         Test pages existing for authorized user.
         """
         pages_status_code = {
-            reverse('favorite-list'): 200,
-            reverse('purchase-list'): 200,
-            reverse('follow-list'): 200,
-            reverse('ingredient-list'): 200,
+            reverse("favorite-list"): 200,
+            reverse("purchase-list"): 200,
+            reverse("follow-list"): 200,
+            reverse("ingredient-list"): 200,
         }
         for name, status_code in pages_status_code.items():
             with self.subTest(name=name):
