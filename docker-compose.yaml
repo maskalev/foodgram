@@ -3,7 +3,7 @@ version: '3.7'
 services:
   db:
     container_name: "foodgram_db"
-    image: postgres
+    image: postgres:12
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
