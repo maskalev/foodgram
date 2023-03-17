@@ -195,3 +195,5 @@ LOGGING = {
         },
     }
 }
+
+CSRF_FAILURE_VIEW = "apps.recipes.views.forbidden"

@@ -185,3 +185,12 @@ def bad_request(request, exception):
         {"path": request.path},
         status=400
     )
+
+
+def forbidden(request, reason=""):
+    return render(
+        request,
+        "misc/403.html",
+        {"path": request.path},
+        status=403
+    )
