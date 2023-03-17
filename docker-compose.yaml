@@ -11,11 +11,12 @@ services:
       - ./.env
   web:
     container_name: "foodgram_web"
-    image: maskalev/foodgram
+    image: maskalev/foodgram:2023-03-21-20-23
     restart: always
     ports:
       - "8000:8000" 
     volumes:
+      - ./logs:/code/logs/
       - ./static:/code/static/
       - ./media:/code/media/
     depends_on:
@@ -29,7 +30,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/conf.d/foodgram.conf:/etc/nginx/conf.d/foodgram.conf
+      - ./nginx/logs:/var/logs/nginx/
       - ./static:/code/static/
       - ./media:/code/media/
     depends_on:

@@ -169,3 +169,29 @@ else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+
+LOGS_ROOT = BASE_DIR / "logs"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{asctime} {levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "logs/app.log",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "formatters": ["verbose"],
+        },
+    }
+}
