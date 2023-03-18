@@ -11,7 +11,7 @@ services:
       - ./.env
   web:
     container_name: "foodgram_web"
-    image: maskalev/foodgram:2023-03-18-00-13
+    image: maskalev/foodgram:2023-03-18-11-53
     restart: always
     ports:
       - "8000:8000" 
